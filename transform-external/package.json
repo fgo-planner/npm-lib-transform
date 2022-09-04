@@ -1,0 +1,37 @@
+{
+    "name": "@fgo-planner/transform-external",
+    "version": "0.0.1",
+    "scripts": {
+        "clean": "rimraf lib",
+        "build-ts": "npm run clean && tsc --strict",
+        "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+        "build": "npm run build-ts && npm run lint",
+        "prepublishOnly": "npm i && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fgo-planner/npm-lib-transform.git"
+    },
+    "author": "Alvin Quach",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/fgo-planner/npm-lib-transform/issues"
+    },
+    "homepage": "https://github.com/fgo-planner/npm-lib-transform/tree/master/transform-external#readme",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "sideEffects": false,
+    "dependencies": {
+        "@fgo-planner/data-types": "0.0.2"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.32.0",
+        "@typescript-eslint/parser": "^5.32.0",
+        "eslint": "^8.21.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.7.4"
+    }
+}
