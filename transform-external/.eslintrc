@@ -4,7 +4,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "parserOptions": {
-        "ecmaVersion": 2018,
+        "ecmaVersion": 2022,
         "sourceType": "module"
     },
     "rules": {
@@ -29,7 +29,7 @@
             "warn",
             "always"
         ],
-        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/semi": [
             "warn",

@@ -1,2 +1,2 @@
 # transform-external
-Provides utilities for converting data from external sources into structures that can be consumed by FGO Planner.
+Provides utilities (transformers, parsers, etc.) for converting data from external sources into objects that can be consumed by FGO Planner.

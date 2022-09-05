@@ -1,2 +1,2 @@
 export * from './logger';
-export * from './transformers/atlas-academy';
+export * from './atlas-academy';

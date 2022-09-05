@@ -1,6 +1,6 @@
+import { ReadonlyRecord } from '@fgo-planner/common-types';
 import { GameItem, GameItemBackground, GameItemUsage } from '@fgo-planner/data-types';
-import { BaseLogger } from '../../logger';
-import { ReadonlyRecord } from '../../types/internal';
+import { BaseLogger } from '../logger';
 import { AtlasAcademyTransformUtils } from './atlas-academy-transform.utils';
 import { AtlasAcademyNiceItemBGType } from './types/atlas-academy-nice-item-bg-type.type';
 import { AtlasAcademyNiceItemType } from './types/atlas-academy-nice-item-type.type';
@@ -60,7 +60,7 @@ export class AtlasAcademyItemsTransformerWorker {
         'friendPoint',      // Friend points
         'anonymous',        // USOs
         'tdLvUp'            // Statues and grails
-    ]);
+    ]) as ReadonlySet<AtlasAcademyNiceItemType>;
 
     //#endregion
 

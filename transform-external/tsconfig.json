@@ -1,11 +1,16 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "declaration": true,
-        "emitDeclarationOnly": true,
         "declarationMap": false,
+        "emitDeclarationOnly": true,
+        "moduleResolution": "node",
+        "noImplicitAny": true,
         "outDir": "lib/types",
-        "target": "es2017",
-        "moduleResolution": "node"
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "strict": true,
+        "target": "es2017"
     },
     "include": [
         "./src/index.ts"

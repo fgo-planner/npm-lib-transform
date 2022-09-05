@@ -1,5 +1,5 @@
 import { GameSoundtrack } from '@fgo-planner/data-types';
-import { BaseLogger } from '../../logger';
+import { BaseLogger } from '../logger';
 import { AtlasAcademyTransformUtils } from './atlas-academy-transform.utils';
 import { AtlasAcademyNiceBgmEntity } from './types/atlas-academy-nice-bgm-entity.type';
 

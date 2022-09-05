@@ -1,6 +1,6 @@
 import { ExternalLink, GameServant, GameServantAttribute, GameServantCardType, GameServantClass, GameServantCostume, GameServantEnhancement, GameServantGender, GameServantGrowthCurve, GameServantNoblePhantasm, GameServantNoblePhantasmTarget, GameServantRarity, GameServantSkillMaterials } from '@fgo-planner/data-types';
-import { BaseLogger } from '../../logger';
-import { ReadonlyRecord } from '../../types/internal';
+import { BaseLogger } from '../logger';
+import { ReadonlyRecord } from '@fgo-planner/common-types';
 import { AtlasAcademyTransformUtils } from './atlas-academy-transform.utils';
 import { AtlasAcademyAttribute } from './types/atlas-academy-attribute.type';
 import { AtlasAcademyNiceCardType } from './types/atlas-academy-nice-card-type.type';

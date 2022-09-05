@@ -1,23 +1,6 @@
 {
     "name": "@fgo-planner/transform-external",
-    "version": "0.1.5",
-    "main": "lib/cjs/index.js",
-    "module": "lib/esm/index.js",
-    "types": "lib/types/index.d.ts",
-    "exports": {
-        "types": "./lib/types/index.d.ts",
-        "require": "./lib/cjs/index.js",
-        "import": "./lib/esm/index.js"
-    },
-    "scripts": {
-        "lint": "eslint \"**/*.{js,ts}\"",
-        "clean": "rimraf lib",
-        "build:esm": "cross-env BABEL_ENV=esmUnbundled babel src --extensions '.ts' --out-dir 'lib/esm'",
-        "build:cjs": "cross-env BABEL_ENV=cjs babel src --extensions '.ts' --out-dir 'lib/cjs'",
-        "declarations": "tsc -p tsconfig.json",
-        "build": "npm-run-all -l lint -p clean -p build:esm build:cjs declarations",
-        "prepublishOnly": "npm i && npm run build"
-    },
+    "version": "0.1.8",
     "repository": {
         "type": "git",
         "url": "https://github.com/fgo-planner/npm-lib-transform.git"
@@ -31,9 +14,29 @@
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"
     },
+    "main": "lib/cjs/index.js",
+    "module": "lib/esm/index.js",
+    "types": "lib/types/index.d.ts",
+    "exports": {
+        "types": "./lib/types/index.d.ts",
+        "require": "./lib/cjs/index.js",
+        "import": "./lib/esm/index.js"
+    },
     "sideEffects": false,
+    "scripts": {
+        "lint": "eslint \"**/*.{js,ts}\"",
+        "clean": "rimraf lib",
+        "build:esm": "cross-env BABEL_ENV=esmUnbundled babel src --extensions '.ts' --out-dir 'lib/esm' --no-comments",
+        "build:cjs": "cross-env BABEL_ENV=cjs babel src --extensions '.ts' --out-dir 'lib/cjs' --no-comments",
+        "declarations": "tsc -p tsconfig.json",
+        "build": "npm-run-all -l lint -p clean -p build:esm build:cjs declarations",
+        "prepublishOnly": "npm i && npm run build"
+    },
     "dependencies": {
-        "@fgo-planner/data-types": "0.0.2"
+        "@fgo-planner/common-types": "0.0.1",
+        "@fgo-planner/data-constants": "0.0.1",
+        "@fgo-planner/data-types": "0.1.0",
+        "@fgo-planner/transform-types": "0.0.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.18.10",
