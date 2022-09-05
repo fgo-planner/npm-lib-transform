@@ -21,7 +21,7 @@ import { AtlasAcademyNiceServant } from './types/atlas-academy-nice-servant.type
  * 
  * @returns Array of `GameItem`.
  */
-export function transformAtlasAcademyNiceItems(
+export function transformNiceItems(
     niceItemsJp: ReadonlyArray<AtlasAcademyNiceItem>,
     niceItemsEn: ReadonlyArray<AtlasAcademyNiceItem>,
     logger?: BaseLogger<number>
@@ -51,7 +51,7 @@ export function transformAtlasAcademyNiceItems(
  *
  * @returns Array of `GameServant`.
  */
-export function transformAtlasAcademyNiceServants(
+export function transformNiceServants(
     niceServantsJp: ReadonlyArray<AtlasAcademyNiceServant>,
     niceServantsEn: ReadonlyArray<AtlasAcademyNiceServant>,
     logger?: BaseLogger<number>
@@ -76,7 +76,7 @@ export function transformAtlasAcademyNiceServants(
  *
  * @returns Array of `GameSoundtrack`.
  */
-export function transformAtlasAcademyNiceBgmEntities(
+export function transformNiceBgmEntities(
     niceSoundtracksJp: ReadonlyArray<AtlasAcademyNiceBgmEntity>,
     logger?: BaseLogger<number>
 ): Array<GameSoundtrack> {

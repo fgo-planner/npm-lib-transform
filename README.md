@@ -14,3 +14,6 @@ Each module in this repository should come with a `.npmrc.example` file at the r
 This is required for both installing and publishing the `@fgo-planner` packages.
 
 Also do not forget to increment version number before publishing.
+
+## Tests
+If VSCode cannot find the types for jest, run `npm install` at the root directory.

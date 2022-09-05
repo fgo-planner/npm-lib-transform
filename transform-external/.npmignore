@@ -6,10 +6,12 @@
 .git
 .gitignore
 .npmrc*
+coverage
 examples
 node_modules
 npm-debug.log
 src
+test
 tsconfig.json
 typings
 typings.json
