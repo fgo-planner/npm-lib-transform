@@ -8,8 +8,8 @@ import { AtlasAcademyNiceItemUse } from './types/atlas-academy-nice-item-use.typ
 import { AtlasAcademyNiceItem } from './types/atlas-academy-nice-item.type';
 
 /**
- * Used internally by `AtlasAcademyItemsTransformer`, do not add to module
- * exports.
+ * Used internally by functions in `atlas-academy-data-transformers.ts`, do not
+ * add to module exports.
  */
 export class AtlasAcademyItemsTransformerWorker {
 

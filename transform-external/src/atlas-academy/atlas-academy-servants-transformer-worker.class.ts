@@ -12,8 +12,8 @@ import { AtlasAcademyNiceTd } from './types/atlas-academy-nice-td.type';
 import { AtlasAcademySvtClass } from './types/atlas-academy-svt-class.type';
 
 /**
- * Used internally by `AtlasAcademyServantsTransformer`, do not add to module
- * exports.
+ * Used internally by functions in `atlas-academy-data-transformers.ts`, do not
+ * add to module exports.
  */
 export class AtlasAcademyServantsTransformerWorker {
 
