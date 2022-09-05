@@ -13,6 +13,10 @@ import { AtlasAcademyNiceItem } from './types/atlas-academy-nice-item.type';
  */
 export class AtlasAcademyItemsTransformer {
 
+    private constructor() {
+        
+    }
+
     static transform(
         niceItemsJp: ReadonlyArray<AtlasAcademyNiceItem>,
         niceItemsEn: ReadonlyArray<AtlasAcademyNiceItem>,

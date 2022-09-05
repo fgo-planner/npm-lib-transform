@@ -12,6 +12,10 @@ import { AtlasAcademyNiceBgmEntity } from './types/atlas-academy-nice-bgm-entity
  */
 export class AtlasAcademySoundtracksTransformer {
 
+    private constructor() {
+        
+    }
+
     static transform(
         niceSoundtracksJp: ReadonlyArray<AtlasAcademyNiceBgmEntity>,
         logger?: BaseLogger<number>

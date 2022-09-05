@@ -13,6 +13,10 @@ import { AtlasAcademyNiceServant } from './types/atlas-academy-nice-servant.type
  */
 export class AtlasAcademyServantsTransformer {
 
+    private constructor() {
+        
+    }
+
     static transform(
         niceServantsJp: ReadonlyArray<AtlasAcademyNiceServant>,
         niceServantsEn: ReadonlyArray<AtlasAcademyNiceServant>,

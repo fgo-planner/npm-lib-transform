@@ -7,13 +7,16 @@ import { AtlasAcademyNiceItemAmount } from './types/atlas-academy-nice-item-amou
  */
 export class AtlasAcademyTransformUtils {
 
+    private constructor() {
+        
+    }
+
     static transformItemAmountData({ item, amount }: AtlasAcademyNiceItemAmount): GameItemQuantity {
         return {
             itemId: item.id,
             quantity: amount
         };
     }
-
     
     static toMap<T extends { id: number }>(niceData: ReadonlyArray<T>): Record<number, T> {
         // TODO Use ArrayUtils for this
