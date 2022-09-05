@@ -1,8 +1,8 @@
 import { GameItem, GameServant, GameSoundtrack } from '@fgo-planner/data-types';
 import { BaseLogger } from '../logger';
-import { AtlasAcademyItemsTransformerWorker } from './atlas-academy-items-transformer-worker.class';
-import { AtlasAcademyServantsTransformerWorker } from './atlas-academy-servants-transformer-worker.class';
-import { AtlasAcademySoundtracksTransformerWorker } from './atlas-academy-soundtracks-transformer-worker.class';
+import { AtlasAcademyItemsTransformer } from './atlas-academy-items-transformer.class';
+import { AtlasAcademyServantsTransformer } from './atlas-academy-servants-transformer.class';
+import { AtlasAcademySoundtracksTransformer } from './atlas-academy-soundtracks-transformer.class';
 import { AtlasAcademyNiceBgmEntity } from './types/atlas-academy-nice-bgm-entity.type';
 import { AtlasAcademyNiceItem } from './types/atlas-academy-nice-item.type';
 import { AtlasAcademyNiceServant } from './types/atlas-academy-nice-servant.type';
@@ -21,13 +21,13 @@ import { AtlasAcademyNiceServant } from './types/atlas-academy-nice-servant.type
  * 
  * @returns Array of `GameItem`.
  */
-export function transformNiceItems(
+export function transformAtlasAcademyNiceItems(
     niceItemsJp: ReadonlyArray<AtlasAcademyNiceItem>,
     niceItemsEn: ReadonlyArray<AtlasAcademyNiceItem>,
     logger?: BaseLogger<number>
 ): Array<GameItem> {
 
-    const worker = new AtlasAcademyItemsTransformerWorker(
+    const worker = new AtlasAcademyItemsTransformer(
         niceItemsJp,
         niceItemsEn,
         logger
@@ -51,13 +51,13 @@ export function transformNiceItems(
  *
  * @returns Array of `GameServant`.
  */
-export function transformNiceServants(
+export function transformAtlasAcademyNiceServants(
     niceServantsJp: ReadonlyArray<AtlasAcademyNiceServant>,
     niceServantsEn: ReadonlyArray<AtlasAcademyNiceServant>,
     logger?: BaseLogger<number>
 ): Array<GameServant> {
 
-    const worker = new AtlasAcademyServantsTransformerWorker(
+    const worker = new AtlasAcademyServantsTransformer(
         niceServantsJp,
         niceServantsEn,
         logger
@@ -76,12 +76,12 @@ export function transformNiceServants(
  *
  * @returns Array of `GameSoundtrack`.
  */
-export function transformNiceBgmEntities(
+export function transformAtlasAcademyNiceBgmEntities(
     niceSoundtracksJp: ReadonlyArray<AtlasAcademyNiceBgmEntity>,
     logger?: BaseLogger<number>
 ): Array<GameSoundtrack> {
 
-    const worker = new AtlasAcademySoundtracksTransformerWorker(
+    const worker = new AtlasAcademySoundtracksTransformer(
         niceSoundtracksJp,
         logger
     );

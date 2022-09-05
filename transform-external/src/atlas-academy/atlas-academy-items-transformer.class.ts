@@ -8,10 +8,9 @@ import { AtlasAcademyNiceItemUse } from './types/atlas-academy-nice-item-use.typ
 import { AtlasAcademyNiceItem } from './types/atlas-academy-nice-item.type';
 
 /**
- * Used internally by functions in `atlas-academy-data-transformers.ts`, do not
- * add to module exports.
+ * Helper class for internal use only, do not add to module exports.
  */
-export class AtlasAcademyItemsTransformerWorker {
+export class AtlasAcademyItemsTransformer {
 
     //#region Constants
 
@@ -96,8 +95,8 @@ export class AtlasAcademyItemsTransformerWorker {
 
         this._logger?.info(niceItem.id, 'Processing item');
 
-        const background = AtlasAcademyItemsTransformerWorker._ItemBackgroundMap[niceItem.background];
-        const uses = niceItem.uses.map(use => AtlasAcademyItemsTransformerWorker._ItemUsageMap[use]);
+        const background = AtlasAcademyItemsTransformer._ItemBackgroundMap[niceItem.background];
+        const uses = niceItem.uses.map(use => AtlasAcademyItemsTransformer._ItemUsageMap[use]);
         const result: GameItem = {
             _id: niceItem.id,
             name: niceItem.name,
@@ -121,7 +120,7 @@ export class AtlasAcademyItemsTransformerWorker {
             // Always import if the item has enhancement uses defined.
             return true;
         }
-        return AtlasAcademyItemsTransformerWorker._AdditionalItemImportTypes.has(type);
+        return AtlasAcademyItemsTransformer._AdditionalItemImportTypes.has(type);
     }
 
     /**
@@ -152,7 +151,7 @@ export class AtlasAcademyItemsTransformerWorker {
          * Remove 'Quest Clear Reward' from QP name.
          */
         if (gameItem._id === 5) {
-            gameItem.name = AtlasAcademyItemsTransformerWorker._QpName;
+            gameItem.name = AtlasAcademyItemsTransformer._QpName;
         }
     }
 

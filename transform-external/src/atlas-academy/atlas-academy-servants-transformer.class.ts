@@ -12,10 +12,9 @@ import { AtlasAcademyNiceTd } from './types/atlas-academy-nice-td.type';
 import { AtlasAcademySvtClass } from './types/atlas-academy-svt-class.type';
 
 /**
- * Used internally by functions in `atlas-academy-data-transformers.ts`, do not
- * add to module exports.
+ * Helper class for internal use only, do not add to module exports.
  */
-export class AtlasAcademyServantsTransformerWorker {
+export class AtlasAcademyServantsTransformer {
 
     //#region Constants
 
@@ -134,7 +133,7 @@ export class AtlasAcademyServantsTransformerWorker {
          */
         if (niceServant.type !== 'heroine') {
             ascensionMaterials = {};
-            for (let i = 0; i < AtlasAcademyServantsTransformerWorker._AscensionLevelCount; i++) {
+            for (let i = 0; i < AtlasAcademyServantsTransformer._AscensionLevelCount; i++) {
                 const ascensionMaterial = niceServant.ascensionMaterials[i as AscensionMaterialKey];
                 /**
                  * Atlas Academy ascension materials start at index 0 instead of 1. We need to
@@ -178,12 +177,12 @@ export class AtlasAcademyServantsTransformerWorker {
             _id: niceServant.id,
             name: niceServant.name,
             collectionNo: niceServant.collectionNo,
-            class: AtlasAcademyServantsTransformerWorker._ServantClassMap[niceServant.className],
+            class: AtlasAcademyServantsTransformer._ServantClassMap[niceServant.className],
             rarity: niceServant.rarity as GameServantRarity,
             cost: niceServant.cost,
             maxLevel: niceServant.lvMax,
-            gender: AtlasAcademyServantsTransformerWorker._ServantGenderMap[niceServant.gender],
-            attribute: AtlasAcademyServantsTransformerWorker._ServantAttributeMap[niceServant.attribute],
+            gender: AtlasAcademyServantsTransformer._ServantGenderMap[niceServant.gender],
+            attribute: AtlasAcademyServantsTransformer._ServantAttributeMap[niceServant.attribute],
             hpBase: niceServant.hpBase,
             hpMax: niceServant.hpMax,
             atkBase: niceServant.atkBase,
@@ -208,7 +207,7 @@ export class AtlasAcademyServantsTransformerWorker {
 
     private _transformSkillMaterials(skillMaterials: Record<SkillMaterialKey, AtlasAcademyNiceLvlUpMaterial>): GameServantSkillMaterials {
         const result = {} as any;
-        for (let i = 1; i <= AtlasAcademyServantsTransformerWorker._SkillLevelCount; i++) {
+        for (let i = 1; i <= AtlasAcademyServantsTransformer._SkillLevelCount; i++) {
             const skillMaterial = skillMaterials[i as SkillMaterialKey];
             result[i] = this._transformEnhancementMaterials(skillMaterial);
         }
@@ -264,7 +263,7 @@ export class AtlasAcademyServantsTransformerWorker {
     private _parseNoblePhantasms(noblePhantasms: Array<AtlasAcademyNiceTd>): Array<GameServantNoblePhantasm> {
         const result = [] as Array<GameServantNoblePhantasm>;
         for (const { card, functions } of noblePhantasms) {
-            const cardType = AtlasAcademyServantsTransformerWorker._ServantCardTypeMap[card];
+            const cardType = AtlasAcademyServantsTransformer._ServantCardTypeMap[card];
             if (!cardType) {
                 this._logger?.error(`Unknown card type '${card}' encountered when parsing noble phantasm.`);
                 continue;

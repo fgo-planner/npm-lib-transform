@@ -4,10 +4,9 @@ import { AtlasAcademyTransformUtils } from './atlas-academy-transform.utils';
 import { AtlasAcademyNiceBgmEntity } from './types/atlas-academy-nice-bgm-entity.type';
 
 /**
- * Used internally by functions in `atlas-academy-data-transformers.ts`, do not
- * add to module exports.
+ * Helper class for internal use only, do not add to module exports.
  */
-export class AtlasAcademySoundtracksTransformerWorker {
+export class AtlasAcademySoundtracksTransformer {
 
     constructor(
         private readonly _niceSoundtracksJp: ReadonlyArray<AtlasAcademyNiceBgmEntity>,
