@@ -1,0 +1,16 @@
+.DS_Store
+.babelrc
+.babelrc.js
+.eslintignore
+.eslintrc
+.git
+.gitignore
+.npmrc*
+examples
+node_modules
+npm-debug.log
+src
+tsconfig.json
+typings
+typings.json
+*.tgz
