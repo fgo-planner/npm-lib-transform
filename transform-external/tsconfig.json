@@ -2,7 +2,7 @@
     "compilerOptions": {
         "declaration": true,
         "emitDeclarationOnly": true,
-        "declarationMap": true,
+        "declarationMap": false,
         "outDir": "lib/types",
         "target": "es2017",
         "moduleResolution": "node"
