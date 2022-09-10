@@ -1,16 +1,16 @@
 import { Array2D } from '@fgo-planner/common-types';
+import { GameServant_1100900, GameServant_2013000, GameServant_504400 } from '@fgo-planner/data-test-resources';
 import { MasterServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/transform-types';
 import { FgoManagerParsers } from '../../src/fgo-manager';
 import { LoggerMessageLevel } from '../../src/logger';
-import { Rarity1TestServant, Rarity2TestServant, Rarity5TestServant } from '../resources/game-servant-test-data';
 import { TestLogger } from '../test-logger';
 
 describe('parseRosterSheet', () => {
 
     const gameServantNameMap = {
-        'Arash': Rarity1TestServant,
-        'Chen Gong': Rarity2TestServant,
-        'Space Ishtar': Rarity5TestServant
+        'Arash': GameServant_2013000,
+        'Chen Gong': GameServant_504400,
+        'Space Ishtar': GameServant_1100900
     };
 
     /* eslint-disable max-len */
@@ -88,7 +88,7 @@ describe('parseRosterSheet', () => {
         expect(result.length).toStrictEqual(1);
 
         const servant1 = result[0];
-        expect(servant1.gameId).toStrictEqual(Rarity5TestServant._id);
+        expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);
         expect(servant1.fouHp).toStrictEqual(1000);
@@ -122,7 +122,7 @@ describe('parseRosterSheet', () => {
         expect(result.length).toStrictEqual(1);
 
         const servant1 = result[0];
-        expect(servant1.gameId).toStrictEqual(Rarity5TestServant._id);
+        expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);
         expect(servant1.fouHp).toStrictEqual(1000);
