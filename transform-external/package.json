@@ -1,6 +1,6 @@
 {
     "name": "@fgo-planner/transform-external",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "repository": {
         "type": "git",
         "url": "https://github.com/fgo-planner/npm-lib-transform.git"
@@ -23,6 +23,9 @@
     "main": "lib/cjs/index.js",
     "module": "lib/esm/index.js",
     "sideEffects": false,
+    "engines": {
+        "node": ">=16.10.0"
+    },
     "scripts": {
         "test": "jest --coverage --verbose",
         "test:build": "jest --silent --noStackTrace --forceExit",
@@ -51,7 +54,7 @@
         "@fgo-planner/data-constants": "^0.0.2",
         "@fgo-planner/data-types": "^0.1.0",
         "@fgo-planner/data-utils": "^0.0.2",
-        "@fgo-planner/transform-types": "^0.0.1",
+        "@fgo-planner/transform-types": "^0.0.2",
         "date-fns": "^2.29.2"
     },
     "devDependencies": {
