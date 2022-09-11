@@ -1,7 +1,6 @@
 import { Array2D, ImmutableRecord } from '@fgo-planner/common-core';
-import { GameServant } from '@fgo-planner/data-core';
+import { GameServant, NewMasterServantUpdate } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../logger';
-import { NewMasterServantUpdate } from '../../types';
 import { FgoManagerRosterParser } from './fgo-manager-roster-parser.class';
 
 /**

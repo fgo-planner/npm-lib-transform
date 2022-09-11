@@ -1,8 +1,7 @@
 import { Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameServant, GameServantConstants, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUtils } from '@fgo-planner/data-core';
+import { GameServant, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils, NewMasterServantUpdate } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../logger';
-import { MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, NewMasterServantUpdate } from '../../types';
 
 enum Column {
     ServantName = 'ServantName',
@@ -154,7 +153,8 @@ export class FgoManagerRosterParser {
                 2: IndeterminateValue,
                 3: IndeterminateValue
             },
-            bondLevel
+            bondLevel,
+            unlockedCostumes: new Map()
         };
     }
 
@@ -181,7 +181,7 @@ export class FgoManagerRosterParser {
             this._logger?.warn(this._currentRowIndex, `'${value}' is not a NP level value.`);
             return IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, GameServantConstants.MinNoblePhantasmLevel, GameServantConstants.MaxNoblePhantasmLevel);
+        result = ~~MathUtils.clamp(result, MasterServantConstants.MinNoblePhantasmLevel, MasterServantConstants.MaxNoblePhantasmLevel);
         return result as MasterServantNoblePhantasmLevel;
     }
 
@@ -206,7 +206,7 @@ export class FgoManagerRosterParser {
                 ascension: IndeterminateValue
             };
         }
-        level = ~~MathUtils.clamp(level, GameServantConstants.MinLevel, GameServantConstants.MaxLevel);
+        level = ~~MathUtils.clamp(level, MasterServantConstants.MinLevel, MasterServantConstants.MaxLevel);
         const ascension = MasterServantUtils.roundToNearestValidAscensionLevel(level, 0, gameServant);
         return { level, ascension };
     }
@@ -222,7 +222,7 @@ export class FgoManagerRosterParser {
             this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, GameServantConstants.MinBondLevel, GameServantConstants.MaxBondLevel);
+        result = ~~MathUtils.clamp(result, MasterServantConstants.MinBondLevel, MasterServantConstants.MaxBondLevel);
         return result as MasterServantBondLevel;
     }
 
@@ -258,7 +258,7 @@ export class FgoManagerRosterParser {
             this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return canBeUndefined ? undefined : IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, GameServantConstants.MinSkillLevel, GameServantConstants.MaxSkillLevel);
+        result = ~~MathUtils.clamp(result, MasterServantConstants.MinSkillLevel, MasterServantConstants.MaxSkillLevel);
         return result as MasterServantSkillLevel;
     }
 

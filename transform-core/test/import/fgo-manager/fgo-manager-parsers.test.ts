@@ -1,14 +1,14 @@
 import { Array2D } from '@fgo-planner/common-core';
-import { GameServant_1100900, GameServant_2013000, GameServant_504400 } from '@fgo-planner/data-test-resources';
-import { FgoManagerParsers } from '../../../src/external/fgo-manager';
+import { MasterServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
+import { GameServant_1100900, GameServant_201300, GameServant_504400 } from '@fgo-planner/data-test-resources';
+import { FgoManagerParsers } from '../../../src/import/fgo-manager';
 import { LoggerMessageLevel } from '../../../src/logger';
-import { MasterServantUpdateIndeterminateValue as IndeterminateValue } from '../../../src/types';
 import { DebugTransformLogger } from '../resources/debug-transform-logger.class';
 
 describe('parseRosterSheet', () => {
 
     const gameServantNameMap = {
-        'Arash': GameServant_2013000,
+        'Arash': GameServant_201300,
         'Chen Gong': GameServant_504400,
         'Space Ishtar': GameServant_1100900
     };
@@ -101,6 +101,7 @@ describe('parseRosterSheet', () => {
         expect(servant1.appendSkills[3]).toStrictEqual(IndeterminateValue);
         expect(servant1.bondLevel).toStrictEqual(6);
         expect(servant1.summonDate).toBeDefined();
+        expect(servant1.unlockedCostumes.size).toStrictEqual(0);
 
     });
 
@@ -135,6 +136,7 @@ describe('parseRosterSheet', () => {
         expect(servant1.appendSkills[3]).toStrictEqual(IndeterminateValue);
         expect(servant1.bondLevel).toStrictEqual(6);
         expect(servant1.summonDate).toBeDefined();
+        expect(servant1.unlockedCostumes.size).toStrictEqual(0);
 
     });
 
