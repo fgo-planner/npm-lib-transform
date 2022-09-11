@@ -1,5 +1,5 @@
 # npm-lib-transform
-Contains utilities for transforming data schemas.
+Contains utilities (transformers, parsers, etc.) for converting between data types.
 ## Requirements
 
 ### Node Versions
