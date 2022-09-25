@@ -1,7 +1,7 @@
 import { Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameServant, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils, NewMasterServantUpdate } from '@fgo-planner/data-core';
+import { GameServant, ImportedMasterServantUpdate, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
-import { TransformLogger } from '../../logger';
+import { TransformLogger } from '../../common/logger';
 
 //#region Local type definitions
 
@@ -30,6 +30,8 @@ const LevelPrefix = 'Lv. ';
 const NoblePhantasmLevelPrefix = 'NP';
 
 const AcquisitionDateFormat = 'yyyy. MM. dd.';
+
+const MasterServantUpdateType = 'Imported';
 
 //#endregion
 
@@ -66,7 +68,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
     constructor(
         private _data: Array<Array<string>>,
         private _gameServantNameMap: ImmutableRecord<string, GameServant>,
-        private _logger?: TransformLogger<number>
+        private _logger: TransformLogger<number>
     ) {
         this._headerMap = this._parseHeader(_data);
         this._currentRowIndex = HeaderRowIndex + 1;  // Start one row below the header.
@@ -101,16 +103,16 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
     /**
      * Uncaught exceptions may be thrown.
      */
-    parse(): Array<NewMasterServantUpdate> {
+    parse(): Array<ImportedMasterServantUpdate> {
         if (this._data.length <= this._currentRowIndex) {
-            this._logger?.warn('Data does not contain any servants');
+            this._logger.warn('Data does not contain any servants');
             return [];
         }
-        const result: Array<NewMasterServantUpdate> = [];
+        const result: Array<ImportedMasterServantUpdate> = [];
         for (; this._currentRowIndex < this._data.length; this._currentRowIndex++) {
             this._currentRowData = this._data[this._currentRowIndex];
             if (!this._currentRowData?.length) {
-                this._logger?.info(this._currentRowIndex, 'Skipping empty row');
+                this._logger.info(this._currentRowIndex, 'Skipping empty row');
                 continue;
             }
             try {
@@ -118,13 +120,13 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
                 result.push(servant);
             } catch (e: any) {
                 const message: string = typeof e === 'string' ? e : e.message;
-                this._logger?.error(this._currentRowIndex, message);
+                this._logger.error(this._currentRowIndex, message);
             }
         }
         return result;
     }
 
-    private _parseCurrentRow(): NewMasterServantUpdate {
+    private _parseCurrentRow(): ImportedMasterServantUpdate {
 
         const gameServant = this._parseGameServant();
         const gameId = gameServant._id;
@@ -139,7 +141,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         const skill3 = this._parseSkill(3, true);
 
         return {
-            isNewServant: true,
+            type: MasterServantUpdateType,
             gameId,
             summoned: true,
             summonDate,
@@ -183,7 +185,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         const cleanValue = value.substring(NoblePhantasmLevelPrefix.length);
         let result = Number(cleanValue);
         if (isNaN(result)) {
-            this._logger?.warn(this._currentRowIndex, `'${value}' is not a NP level value.`);
+            this._logger.warn(this._currentRowIndex, `'${value}' is not a NP level value.`);
             return IndeterminateValue;
         }
         result = ~~MathUtils.clamp(result, MasterServantConstants.MinNoblePhantasmLevel, MasterServantConstants.MaxNoblePhantasmLevel);
@@ -205,7 +207,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         const cleanValue = value.substring(LevelPrefix.length);
         let level = Number(cleanValue);
         if (isNaN(level)) {
-            this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid value.`);
+            this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid value.`);
             return {
                 level: IndeterminateValue,
                 ascension: IndeterminateValue
@@ -224,7 +226,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         }
         let result = Number(value);
         if (isNaN(result)) {
-            this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
+            this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return IndeterminateValue;
         }
         result = ~~MathUtils.clamp(result, MasterServantConstants.MinBondLevel, MasterServantConstants.MaxBondLevel);
@@ -239,7 +241,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         }
         let result = Number(value);
         if (isNaN(result)) {
-            this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
+            this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return IndeterminateValue;
         }
         result = MasterServantUtils.roundToNearestValidFouValue(result);
@@ -260,7 +262,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             return canBeUndefined ? undefined : IndeterminateValue;
         }
         if (isNaN(result)) {
-            this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
+            this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return canBeUndefined ? undefined : IndeterminateValue;
         }
         result = ~~MathUtils.clamp(result, MasterServantConstants.MinSkillLevel, MasterServantConstants.MaxSkillLevel);
@@ -278,7 +280,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             return date.getTime();
         } catch (e) {
             console.error(e);
-            this._logger?.warn(this._currentRowIndex, `${this._getColumnLabel(column)} Date value '${value}' could not be parsed.`);
+            this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} Date value '${value}' could not be parsed.`);
             return IndeterminateValue;
         }
     }

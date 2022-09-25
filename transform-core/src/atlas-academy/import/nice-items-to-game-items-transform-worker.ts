@@ -1,6 +1,6 @@
 import { ReadonlyRecord } from '@fgo-planner/common-core';
 import { GameItem, GameItemBackground, GameItemUsage } from '@fgo-planner/data-core';
-import { TransformLogger } from '../../logger';
+import { TransformLogger } from '../../common/logger';
 import { AtlasAcademyTransformUtils } from '../atlas-academy-transform.utils';
 import * as AtlasAcademy from '../types';
 

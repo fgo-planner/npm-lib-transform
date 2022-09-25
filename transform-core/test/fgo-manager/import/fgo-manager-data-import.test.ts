@@ -1,8 +1,8 @@
 import { Array2D } from '@fgo-planner/common-core';
 import { MasterServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
 import { GameServant_1100900, GameServant_201300, GameServant_504400 } from '@fgo-planner/data-test-resources';
+import { LoggerMessageLevel } from '../../../src/common/logger';
 import { FgoManagerDataImport } from '../../../src/fgo-manager';
-import { LoggerMessageLevel } from '../../../src/logger';
 import { DebugTransformLogger } from '../../resources/debug-transform-logger.class';
 
 describe('parseRosterSheet', () => {
@@ -19,8 +19,25 @@ describe('parseRosterSheet', () => {
     const spaceIshtarRow = ['Space Ishtar', '5*', 'Avenger', 'Star', 'Limited', 'B', 'B', 'A', 'A', 'Q', 'TRUE', 'Arts', 'AoE', '52341', 'NP5', 'Lv. 90', '10', '10', '10', '1000', '1000', '6', '', '2021. 10. 18.'];
     /* eslint-enable max-len */
 
+    it('should return the provided logger', () => {
 
-    // TODO Add logger to tests
+        const data: Array2D<string> = [];
+
+        const logger = new DebugTransformLogger();
+
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
+
+        expect(result.logger).toBe(logger);
+    });
+
+    it('should return a default logger if not provided', () => {
+
+        const data: Array2D<string> = [];
+
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap);
+
+        expect(result.logger).toBeDefined();
+    });
 
     it('should log error and return empty result if given an empty input', () => {
 
@@ -28,9 +45,10 @@ describe('parseRosterSheet', () => {
 
         const logger = new DebugTransformLogger();
 
-        const result = FgoManagerDataImport.transformRosterSheetToMasterServantUpdates(data, gameServantNameMap, logger);
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
 
-        expect(result.length).toStrictEqual(0);
+        expect(result.servants).toBeDefined();
+        expect(result.servants?.length).toStrictEqual(0);
 
         expect(logger.messages.length).toBeGreaterThanOrEqual(1);
         const message = logger.findMessage(LoggerMessageLevel.Error, 'Header is missing or invalid');
@@ -46,9 +64,10 @@ describe('parseRosterSheet', () => {
 
         const logger = new DebugTransformLogger();
 
-        const result = FgoManagerDataImport.transformRosterSheetToMasterServantUpdates(data, gameServantNameMap, logger);
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
 
-        expect(result.length).toStrictEqual(0);
+        expect(result.servants).toBeDefined();
+        expect(result.servants?.length).toStrictEqual(0);
 
         expect(logger.messages.length).toBeGreaterThanOrEqual(1);
         const message = logger.findMessage(LoggerMessageLevel.Error, 'could not be found');
@@ -64,9 +83,10 @@ describe('parseRosterSheet', () => {
 
         const logger = new DebugTransformLogger();
 
-        const result = FgoManagerDataImport.transformRosterSheetToMasterServantUpdates(data, gameServantNameMap, logger);
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
 
-        expect(result.length).toStrictEqual(0);
+        expect(result.servants).toBeDefined();
+        expect(result.servants?.length).toStrictEqual(0);
 
         expect(logger.messages.length).toBeGreaterThanOrEqual(1);
         const message = logger.findMessage(LoggerMessageLevel.Warn, 'Data does not contain any servant');
@@ -83,11 +103,13 @@ describe('parseRosterSheet', () => {
 
         const logger = new DebugTransformLogger();
 
-        const result = FgoManagerDataImport.transformRosterSheetToMasterServantUpdates(data, gameServantNameMap, logger);
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
 
-        expect(result.length).toStrictEqual(1);
+        expect(result.servants).toBeDefined();
+        expect(result.servants?.length).toStrictEqual(1);
 
-        const servant1 = result[0];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const servant1 = result.servants![0];
         expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);
@@ -118,11 +140,13 @@ describe('parseRosterSheet', () => {
 
         const logger = new DebugTransformLogger();
 
-        const result = FgoManagerDataImport.transformRosterSheetToMasterServantUpdates(data, gameServantNameMap, logger);
+        const result = FgoManagerDataImport.transformRosterSheetToMasterAccountImportData(data, gameServantNameMap, logger);
 
-        expect(result.length).toStrictEqual(1);
+        expect(result.servants).toBeDefined();
+        expect(result.servants?.length).toStrictEqual(1);
 
-        const servant1 = result[0];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const servant1 = result.servants![0];
         expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);

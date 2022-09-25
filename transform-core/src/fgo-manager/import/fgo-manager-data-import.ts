@@ -1,6 +1,6 @@
 import { Array2D, ImmutableRecord } from '@fgo-planner/common-core';
-import { GameServant, NewMasterServantUpdate } from '@fgo-planner/data-core';
-import { TransformLogger } from '../../logger';
+import { GameServant, ImportedMasterServantUpdate } from '@fgo-planner/data-core';
+import { MasterAccountImportData, TransformLogger } from '../../common';
 import { RosterSheetToMasterServantUpdatesTransformWorker } from './roster-sheet-to-master-servant-updates-transform-worker';
 
 /**
@@ -13,16 +13,32 @@ import { RosterSheetToMasterServantUpdatesTransformWorker } from './roster-sheet
  * @param gameServantNameMap Map of FGO Manager servant names to their
  * corresponding `GameServant` objects.
  *
- * @param logger (optional) Logger to append logs to.
+ * @param logger (optional) A logger to use in place of the default
+ * `TransformLogger`.
  *
- * @return An array of `NewMasterServantUpdate` that can be used to update the
- * master account's servants.
+ * @return A `MasterAccountImportData` data transfer object containing a
+ * `NewMasterServantUpdate` array. 
  */
-export function transformRosterSheetToMasterServantUpdates(
+export function transformRosterSheetToMasterAccountImportData(
     sheetData: Array2D<string>,
     gameServantNameMap: ImmutableRecord<string, GameServant>,
-    logger?: TransformLogger
-): Array<NewMasterServantUpdate> {
+    logger = new TransformLogger()
+): MasterAccountImportData {
+
+    const servants = _transformRosterSheetToMasterServantUpdates(sheetData, gameServantNameMap, logger);
+
+    return {
+        metadata: {},
+        servants,
+        logger
+    };
+}
+
+function _transformRosterSheetToMasterServantUpdates(
+    sheetData: Array2D<string>,
+    gameServantNameMap: ImmutableRecord<string, GameServant>,
+    logger: TransformLogger
+): Array<ImportedMasterServantUpdate> {
 
     try {
         const worker = new RosterSheetToMasterServantUpdatesTransformWorker(
@@ -34,7 +50,7 @@ export function transformRosterSheetToMasterServantUpdates(
         
     } catch (e: any) {
         const message: string = typeof e === 'string' ? e : e.message;
-        logger?.error(message);
+        logger.error(message);
     }
     
     return [];

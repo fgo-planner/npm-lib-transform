@@ -1,5 +1,5 @@
 import { GameItem, GameServant, GameSoundtrack } from '@fgo-planner/data-core';
-import { TransformLogger } from '../../logger';
+import { TransformLogger } from '../../common/logger';
 import { NiceBgmEntity } from '../types/nice-bgm-entity.type';
 import { NiceItem } from '../types/nice-item.type';
 import { NiceServant } from '../types/nice-servant.type';

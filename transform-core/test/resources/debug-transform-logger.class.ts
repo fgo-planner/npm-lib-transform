@@ -1,4 +1,4 @@
-import { LoggerMessage, LoggerMessageLevel, TransformLogger } from '../../src/logger';
+import { LoggerMessage, LoggerMessageLevel, TransformLogger } from '../../src/common/logger';
 
 export class DebugTransformLogger<ID extends string | number | symbol = number> extends TransformLogger<ID> {
 
