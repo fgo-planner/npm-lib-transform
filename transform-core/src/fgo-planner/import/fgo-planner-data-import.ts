@@ -1,4 +1,4 @@
-import { ImportedMasterServantUpdate } from '@fgo-planner/data-core';
+import { ImportedMasterServantUpdate, MasterServantUpdateUtils } from '@fgo-planner/data-core';
 import { MasterAccountImportData, MasterServantExportData, TransformLogger } from '../../common';
 import { MasterAccountExportData } from '../../common/master-account-export-data.type';
 
@@ -89,24 +89,24 @@ function _transformMasterServant(masterServant: MasterServantExportData): Import
         type: ImportedMasterServantUpdateType,
         instanceId,
         gameId,
-        summoned,
-        summonDate: summonDate ?? undefined,
+        summoned: MasterServantUpdateUtils.convertBoolean(summoned),
+        summonDate: summonDate,
         np,
         level,
         ascension,
-        fouAtk: fouAtk ?? undefined,
-        fouHp: fouHp ?? undefined,
+        fouAtk,
+        fouHp,
         skills: {
             1: skill1,
-            2: skill2 ?? undefined,
-            3: skill3 ?? undefined
+            2: skill2,
+            3: skill3
         },
         appendSkills: {
-            1: appendSkill1 ?? undefined,
-            2: appendSkill2 ?? undefined,
-            3: appendSkill3 ?? undefined
+            1: appendSkill1,
+            2: appendSkill2,
+            3: appendSkill3
         },
-        bondLevel: bondLevel ?? undefined,
+        bondLevel,
         unlockedCostumes: new Map()
     };
 

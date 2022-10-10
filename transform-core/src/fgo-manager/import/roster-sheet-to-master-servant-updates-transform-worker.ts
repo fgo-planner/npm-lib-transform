@@ -1,5 +1,5 @@
 import { Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameServant, ImportedMasterServantUpdate, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils } from '@fgo-planner/data-core';
+import { GameServant, ImportedMasterServantUpdate, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateBoolean, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../common/logger';
 
@@ -143,7 +143,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         return {
             type: MasterServantUpdateType,
             gameId,
-            summoned: true,
+            summoned: MasterServantUpdateBoolean.True,
             summonDate,
             np,
             level,
@@ -248,22 +248,22 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         return result;
     }
 
-    private _parseSkill(skill: 1 | 2 | 3, canBeUndefined: false): MasterServantSkillLevel | Indeterminate;
-    private _parseSkill(skill: 1 | 2 | 3, canBeUndefined: true): MasterServantSkillLevel | undefined;
-    private _parseSkill(skill: 1 | 2 | 3, canBeUndefined: boolean): MasterServantSkillLevel | undefined | Indeterminate {
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: false): MasterServantSkillLevel | Indeterminate;
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: true): MasterServantSkillLevel | null;
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: boolean): MasterServantSkillLevel | Indeterminate | null {
         const path = `SkillLevel${skill}` as keyof typeof Column;
         const column = Column[path];
         const value = this._parseDataFromCurrentRow(column);
         if (!value) {
-            return canBeUndefined ? undefined : IndeterminateValue;
+            return canBeNull ? null : IndeterminateValue;
         }
         let result = Number(value);
         if (result === 0) {
-            return canBeUndefined ? undefined : IndeterminateValue;
+            return canBeNull ? null : IndeterminateValue;
         }
         if (isNaN(result)) {
             this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
-            return canBeUndefined ? undefined : IndeterminateValue;
+            return canBeNull ? null : IndeterminateValue;
         }
         result = ~~MathUtils.clamp(result, MasterServantConstants.MinSkillLevel, MasterServantConstants.MaxSkillLevel);
         return result as MasterServantSkillLevel;
