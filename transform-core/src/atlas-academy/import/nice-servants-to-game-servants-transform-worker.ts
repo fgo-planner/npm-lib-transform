@@ -211,7 +211,7 @@ export class NiceServantsToGameServantsTransformWorker {
      * `GameServantEnhancement` object.
      */
     private _transformEnhancementMaterials(material: AtlasAcademy.NiceLvlUpMaterial): GameServantEnhancement {
-        const materials = material.items.map(AtlasAcademyTransformUtils.transformItemAmountData);
+        const materials = AtlasAcademyTransformUtils.transformItemAmountData(material.items);
         return {
             materials,
             qp: material.qp

@@ -1,4 +1,4 @@
-import { GameItemQuantity, GameSoundtrack } from '@fgo-planner/data-core';
+import { GameItemQuantities, GameSoundtrack } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
 import { AtlasAcademyTransformUtils } from '../atlas-academy-transform.utils';
 import * as AtlasAcademy from '../types';
@@ -34,7 +34,7 @@ export class NiceBgmEntitiesToGameSoundtrackTransformWorker {
 
         this._logger?.info(niceBgm.id, 'Processing soundtrack');
 
-        let material: GameItemQuantity | undefined;
+        let material: GameItemQuantities | undefined;
         if (niceBgm.shop) {
             material = AtlasAcademyTransformUtils.transformItemAmountData(niceBgm.shop.cost);
         }

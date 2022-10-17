@@ -1,7 +1,7 @@
 
 
-import { ArrayUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameItemQuantityUtils, ImmutableMasterAccount, ImmutableMasterServant, MasterServantBondLevel } from '@fgo-planner/data-core';
+import { ReadonlyRecord } from '@fgo-planner/common-core';
+import { ImmutableMasterAccount, ImmutableMasterServant, MasterServantBondLevel } from '@fgo-planner/data-core';
 import { MasterAccountExportData } from './master-account-export-data.type';
 import { MasterServantExportData } from './master-servant-export-data.type';
 
@@ -23,8 +23,6 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
 
     const exportedServants = servants.map(servant => _transformMasterServant(servant, bondLevels));
 
-    const exportedItems = ArrayUtils.mapArrayToObject(items, GameItemQuantityUtils.getItemId, GameItemQuantityUtils.getQuantity);
-
     return {
         source: {
             id: String(_id),
@@ -33,7 +31,7 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
         },
         servants: exportedServants,
         resources: {
-            items: exportedItems,
+            items: { ...items },
             qp
         },
         costumes: [...costumes],

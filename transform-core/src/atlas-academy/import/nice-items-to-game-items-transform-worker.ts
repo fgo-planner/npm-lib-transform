@@ -90,21 +90,29 @@ export class NiceItemsToGameItemsTransformWorker {
             return null;
         }
 
-        this._logger?.info(niceItem.id, 'Processing item');
+        const {
+            id,
+            name,
+            detail: description,
+            priority
+        } = niceItem;
+
+        this._logger?.info(id, 'Processing item');
 
         const background = ItemBackgroundMap[niceItem.background];
         const uses = niceItem.uses.map(use => ItemUsageMap[use]);
         const result: GameItem = {
-            _id: niceItem.id,
-            name: niceItem.name,
-            description: niceItem.detail,
+            _id: id,
+            name,
+            description,
+            priority,
             background,
             uses
         };
         this._populateItemEnglishStrings(result);
         this._additionalTransforms(result);
 
-        this._logger?.info(niceItem.id, 'Item processed');
+        this._logger?.info(id, 'Item processed');
         return result;
     }
 

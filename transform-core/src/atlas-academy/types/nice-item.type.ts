@@ -19,4 +19,6 @@ export type NiceItem = {
 
     background: NiceItemBGType;
 
+    priority: number;
+
 };
