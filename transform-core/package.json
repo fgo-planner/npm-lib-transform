@@ -1,7 +1,7 @@
 {
     "name": "@fgo-planner/transform-core",
     "description": "Provides utilities (transformers, parsers, etc.) for importing and exporting data.",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/fgo-planner/npm-lib-transform.git"

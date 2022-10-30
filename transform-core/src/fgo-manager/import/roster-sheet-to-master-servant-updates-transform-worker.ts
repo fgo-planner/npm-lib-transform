@@ -1,4 +1,4 @@
-import { Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
+import { DateTimeUtils, Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
 import { GameServant, ImportedMasterServantUpdate, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateBoolean, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../common/logger';
@@ -277,7 +277,11 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         }
         try {
             const date = parseDate(value, AcquisitionDateFormat, new Date(0));
-            return date.getTime();
+            /**
+             * The parsed date will be in the local time zone. We need to convert
+             * the date to UTC.
+             */
+            return DateTimeUtils.zonedToUtcTime(date).getTime();
         } catch (e) {
             console.error(e);
             this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} Date value '${value}' could not be parsed.`);

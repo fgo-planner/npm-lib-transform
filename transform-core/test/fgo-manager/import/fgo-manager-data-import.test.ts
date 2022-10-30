@@ -122,7 +122,7 @@ describe('parseRosterSheet', () => {
         expect(servant1.appendSkills[2]).toStrictEqual(IndeterminateValue);
         expect(servant1.appendSkills[3]).toStrictEqual(IndeterminateValue);
         expect(servant1.bondLevel).toStrictEqual(6);
-        expect(servant1.summonDate).toBeDefined();
+        expect(servant1.summonDate).toStrictEqual(1634515200000);
         expect(servant1.unlockedCostumes.size).toStrictEqual(0);
 
     });
@@ -159,7 +159,7 @@ describe('parseRosterSheet', () => {
         expect(servant1.appendSkills[2]).toStrictEqual(IndeterminateValue);
         expect(servant1.appendSkills[3]).toStrictEqual(IndeterminateValue);
         expect(servant1.bondLevel).toStrictEqual(6);
-        expect(servant1.summonDate).toBeDefined();
+        expect(servant1.summonDate).toStrictEqual(1634515200000);
         expect(servant1.unlockedCostumes.size).toStrictEqual(0);
 
     });
