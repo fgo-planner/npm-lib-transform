@@ -1,5 +1,5 @@
 import { Array2D } from '@fgo-planner/common-core';
-import { MasterServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
+import { InstantiatedServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
 import { GameServant_1100900, GameServant_201300, GameServant_504400 } from '@fgo-planner/data-test-resources';
 import { LoggerMessageLevel } from '../../../src/common/logger';
 import { FgoManagerDataImport } from '../../../src/fgo-manager';

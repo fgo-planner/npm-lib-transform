@@ -1,7 +1,7 @@
 
 
 import { ReadonlyRecord } from '@fgo-planner/common-core';
-import { ImmutableMasterAccount, ImmutableMasterServant, MasterServantBondLevel } from '@fgo-planner/data-core';
+import { ImmutableMasterAccount, ImmutableMasterServant, InstantiatedServantBondLevel } from '@fgo-planner/data-core';
 import { MasterAccountExportData } from './master-account-export-data.type';
 import { MasterServantExportData } from './master-servant-export-data.type';
 
@@ -42,7 +42,7 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
 
 function _transformMasterServant(
     masterServant: ImmutableMasterServant,
-    bondLevels: ReadonlyRecord<number, MasterServantBondLevel>
+    bondLevels: ReadonlyRecord<number, InstantiatedServantBondLevel>
 ): MasterServantExportData {
 
     const {

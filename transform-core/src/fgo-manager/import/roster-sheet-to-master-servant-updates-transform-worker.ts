@@ -1,5 +1,5 @@
 import { DateTimeUtils, Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameServant, ImportedMasterServantUpdate, MasterServantAscensionLevel, MasterServantBondLevel, MasterServantConstants, MasterServantNoblePhantasmLevel, MasterServantSkillLevel, MasterServantUpdateBoolean, MasterServantUpdateIndeterminate as Indeterminate, MasterServantUpdateIndeterminateValue as IndeterminateValue, MasterServantUtils } from '@fgo-planner/data-core';
+import { GameServant, ImportedMasterServantUpdate, InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantConstants, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel, InstantiatedServantUpdateBoolean, InstantiatedServantUpdateIndeterminate as Indeterminate, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue, InstantiatedServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../common/logger';
 
@@ -143,7 +143,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         return {
             type: MasterServantUpdateType,
             gameId,
-            summoned: MasterServantUpdateBoolean.True,
+            summoned: InstantiatedServantUpdateBoolean.True,
             summonDate,
             np,
             level,
@@ -177,24 +177,27 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         return result;
     }
 
-    private _parseNoblePhantasm(): MasterServantNoblePhantasmLevel | Indeterminate {
+    private _parseNoblePhantasm(): InstantiatedServantNoblePhantasmLevel | Indeterminate {
         const value = this._parseDataFromCurrentRow(Column.NoblePhantasmLevel);
         if (!value) {
             return IndeterminateValue;
         }
         const cleanValue = value.substring(NoblePhantasmLevelPrefix.length);
-        let result = Number(cleanValue);
+        const result = Number(cleanValue);
         if (isNaN(result)) {
             this._logger.warn(this._currentRowIndex, `'${value}' is not a NP level value.`);
             return IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, MasterServantConstants.MinNoblePhantasmLevel, MasterServantConstants.MaxNoblePhantasmLevel);
-        return result as MasterServantNoblePhantasmLevel;
+        return ~~MathUtils.clamp(
+            result, 
+            InstantiatedServantConstants.MinNoblePhantasmLevel, 
+            InstantiatedServantConstants.MaxNoblePhantasmLevel
+        ) as InstantiatedServantNoblePhantasmLevel;
     }
 
     private _parseLevelAndAscension(gameServant: Immutable<GameServant>): {
         level: number | Indeterminate;
-        ascension: MasterServantAscensionLevel | Indeterminate;
+        ascension: InstantiatedServantAscensionLevel | Indeterminate;
     } {
         const column = Column.Level;
         const value = this._parseDataFromCurrentRow(column);
@@ -213,12 +216,12 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
                 ascension: IndeterminateValue
             };
         }
-        level = ~~MathUtils.clamp(level, MasterServantConstants.MinLevel, MasterServantConstants.MaxLevel);
-        const ascension = MasterServantUtils.roundToNearestValidAscensionLevel(level, 0, gameServant);
+        level = ~~MathUtils.clamp(level, InstantiatedServantConstants.MinLevel, InstantiatedServantConstants.MaxLevel);
+        const ascension = InstantiatedServantUtils.roundToNearestValidAscensionLevel(level, 0, gameServant.maxLevel);
         return { level, ascension };
     }
 
-    private _parseBond(): MasterServantBondLevel | Indeterminate {
+    private _parseBond(): InstantiatedServantBondLevel | Indeterminate {
         const column = Column.BondLevel;
         const value = this._parseDataFromCurrentRow(column);
         if (!value) {
@@ -229,8 +232,8 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, MasterServantConstants.MinBondLevel, MasterServantConstants.MaxBondLevel);
-        return result as MasterServantBondLevel;
+        result = ~~MathUtils.clamp(result, InstantiatedServantConstants.MinBondLevel, InstantiatedServantConstants.MaxBondLevel);
+        return result as InstantiatedServantBondLevel;
     }
 
     private _parseFou(stat: 'FouHp' | 'FouAtk'): number | Indeterminate {
@@ -244,13 +247,13 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return IndeterminateValue;
         }
-        result = MasterServantUtils.roundToNearestValidFouValue(result);
+        result = InstantiatedServantUtils.roundToNearestValidFouValue(result);
         return result;
     }
 
-    private _parseSkill(skill: 1 | 2 | 3, canBeNull: false): MasterServantSkillLevel | Indeterminate;
-    private _parseSkill(skill: 1 | 2 | 3, canBeNull: true): MasterServantSkillLevel | null;
-    private _parseSkill(skill: 1 | 2 | 3, canBeNull: boolean): MasterServantSkillLevel | Indeterminate | null {
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: false): InstantiatedServantSkillLevel | Indeterminate;
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: true): InstantiatedServantSkillLevel | null;
+    private _parseSkill(skill: 1 | 2 | 3, canBeNull: boolean): InstantiatedServantSkillLevel | Indeterminate | null {
         const path = `SkillLevel${skill}` as keyof typeof Column;
         const column = Column[path];
         const value = this._parseDataFromCurrentRow(column);
@@ -265,8 +268,8 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             this._logger.warn(this._currentRowIndex, `${this._getColumnLabel(column)} '${value}' is not a valid number.`);
             return canBeNull ? null : IndeterminateValue;
         }
-        result = ~~MathUtils.clamp(result, MasterServantConstants.MinSkillLevel, MasterServantConstants.MaxSkillLevel);
-        return result as MasterServantSkillLevel;
+        result = ~~MathUtils.clamp(result, InstantiatedServantConstants.MinSkillLevel, InstantiatedServantConstants.MaxSkillLevel);
+        return result as InstantiatedServantSkillLevel;
     }
 
     private _parseSummonDate(): number | Indeterminate {

@@ -1,4 +1,4 @@
-import { MasterServantAscensionLevel, MasterServantBondLevel, MasterServantNoblePhantasmLevel, MasterServantSkillLevel } from '@fgo-planner/data-core';
+import { InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel } from '@fgo-planner/data-core';
 
 export type MasterServantExportData = {
     
@@ -10,28 +10,28 @@ export type MasterServantExportData = {
 
     summonDate: number | null;
 
-    np: MasterServantNoblePhantasmLevel;
+    np: InstantiatedServantNoblePhantasmLevel;
 
     level: number;
 
-    ascension: MasterServantAscensionLevel;
+    ascension: InstantiatedServantAscensionLevel;
 
     fouAtk: number | null;
 
     fouHp: number | null;
 
     skills: {
-        1: MasterServantSkillLevel;
-        2: MasterServantSkillLevel | null;
-        3: MasterServantSkillLevel | null;
+        1: InstantiatedServantSkillLevel;
+        2: InstantiatedServantSkillLevel | null;
+        3: InstantiatedServantSkillLevel | null;
     };
 
     appendSkills: {
-        1: MasterServantSkillLevel | null;
-        2: MasterServantSkillLevel | null;
-        3: MasterServantSkillLevel | null;
+        1: InstantiatedServantSkillLevel | null;
+        2: InstantiatedServantSkillLevel | null;
+        3: InstantiatedServantSkillLevel | null;
     };
 
-    bondLevel: MasterServantBondLevel | null;
+    bondLevel: InstantiatedServantBondLevel | null;
 
 };
