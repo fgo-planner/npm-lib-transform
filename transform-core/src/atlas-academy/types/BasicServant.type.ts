@@ -1,6 +1,6 @@
-import { NiceSvtFlag } from './nice-svt-flag.type';
-import { NiceSvtType } from './nice-svt-type.type';
-import { SvtClass } from './svt-class.type';
+import { NiceSvtFlag } from './NiceSvtFlag.type';
+import { NiceSvtType } from './NiceSvtType.type';
+import { SvtClass } from './SvtClass.type';
 
 /**
  * Partial type definition for Atlas Academy's `BasicServant` data schema.

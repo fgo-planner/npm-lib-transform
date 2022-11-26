@@ -1,11 +1,11 @@
 import { GameItem, GameServant, GameSoundtrack } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
-import { NiceBgmEntity } from '../types/nice-bgm-entity.type';
-import { NiceItem } from '../types/nice-item.type';
-import { NiceServant } from '../types/nice-servant.type';
-import { NiceBgmEntitiesToGameSoundtrackTransformWorker } from './nice-bgm-entities-to-game-soundtracks-transform-worker';
-import { NiceItemsToGameItemsTransformWorker } from './nice-items-to-game-items-transform-worker';
-import { NiceServantsToGameServantsTransformWorker } from './nice-servants-to-game-servants-transform-worker';
+import { NiceBgmEntity } from '../types/NiceBgmEntity.type';
+import { NiceItem } from '../types/NiceItem.type';
+import { NiceServant } from '../types/NiceServant.type';
+import { NiceBgmEntitiesToGameSoundtrackTransformWorker } from './NiceBgmEntitiesToGameSoundtracksTransformWorker';
+import { NiceItemsToGameItemsTransformWorker } from './NiceItemsToGameItemsTransformWorker';
+import { NiceServantsToGameServantsTransformWorker } from './NiceServantsToGameServantsTransformWorker';
 
 /**
  * Transforms an array of `NiceItem` from Atlas Academy to an array of

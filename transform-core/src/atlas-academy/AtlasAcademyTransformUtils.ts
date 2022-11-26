@@ -1,8 +1,8 @@
 import { CollectionUtils } from '@fgo-planner/common-core';
-import { GameItemQuantities } from '@fgo-planner/data-core';
-import { NiceItemAmount } from './types/nice-item-amount.type';
+import { ItemQuantities } from '@fgo-planner/data-core';
+import { NiceItemAmount } from './types/NiceItemAmount.type';
 
-function transformItemAmountData(value: NiceItemAmount | Array<NiceItemAmount>): GameItemQuantities {
+function transformItemAmountData(value: NiceItemAmount | Array<NiceItemAmount>): ItemQuantities {
     if (Array.isArray(value)) {
         return CollectionUtils.mapIterableToObject(value, _getItemId, _getAmount);
     }

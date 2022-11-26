@@ -1,7 +1,7 @@
 import { Array2D, ImmutableRecord } from '@fgo-planner/common-core';
 import { GameServant, ImportedMasterServantUpdate } from '@fgo-planner/data-core';
 import { MasterAccountImportData, TransformLogger } from '../../common';
-import { RosterSheetToMasterServantUpdatesTransformWorker } from './roster-sheet-to-master-servant-updates-transform-worker';
+import { RosterSheetToMasterServantUpdatesTransformWorker } from './RosterSheetToMasterServantUpdatesTransformWorker';
 
 /**
  * Transforms the 'Roster' sheet data from FGO Manager (exported as CSV) into an

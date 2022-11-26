@@ -1,4 +1,4 @@
-import { LoggerMessageLevel } from './logger-message-level.enum';
+import { LoggerMessageLevel } from './LoggerMessageLevel.enum';
 
 export type LoggerMessage = {
 

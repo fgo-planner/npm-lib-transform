@@ -1,5 +1,5 @@
-import { NiceCostume } from './nice-costume.type';
-import { NiceLoreStats } from './nice-lore-stats.type';
+import { NiceCostume } from './NiceCostume.type';
+import { NiceLoreStats } from './NiceLoreStats.type';
 
 /**
  * Partial type definition for the `profile` path in the `NiceServant` data

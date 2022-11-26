@@ -1,6 +1,6 @@
 import { ImportedMasterServantUpdate, ServantUpdateUtils } from '@fgo-planner/data-core';
 import { MasterAccountImportData, MasterServantExportData, TransformLogger } from '../../common';
-import { MasterAccountExportData } from '../../common/master-account-export-data.type';
+import { MasterAccountExportData } from '../../common/MasterAccountExportData.type';
 
 const ImportedMasterServantUpdateType = 'Imported';
 

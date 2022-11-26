@@ -1,4 +1,4 @@
-import { MasterServantExportData } from './master-servant-export-data.type';
+import { MasterServantExportData } from './MasterServantExportData.type';
 
 export type MasterAccountExportData = {
     

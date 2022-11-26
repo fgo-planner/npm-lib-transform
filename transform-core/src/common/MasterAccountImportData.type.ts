@@ -1,5 +1,5 @@
 import { ImportedMasterServantUpdate } from '@fgo-planner/data-core';
-import { TransformLogger } from './logger/transform-logger.class';
+import { TransformLogger } from './logger/TransformLogger.class';
 
 export type MasterAccountImportData = {
 

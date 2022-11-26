@@ -4,7 +4,7 @@
  */
 
 export * from './logger';
-export * from './master-account-export-data.type';
-export * as MasterAccountExportUtils from './master-account-export.utils';
-export * from './master-account-import-data.type';
-export * from './master-servant-export-data.type';
+export * from './MasterAccountExportData.type';
+export * as MasterAccountExportUtils from './MasterAccountExportUtils';
+export * from './MasterAccountImportData.type';
+export * from './MasterServantExportData.type';

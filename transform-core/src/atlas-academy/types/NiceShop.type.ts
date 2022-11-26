@@ -1,4 +1,4 @@
-import { NiceItemAmount } from './nice-item-amount.type';
+import { NiceItemAmount } from './NiceItemAmount.type';
 
 /**
  * Partial type definition for Atlas Academy's `NiceShop` data schema.

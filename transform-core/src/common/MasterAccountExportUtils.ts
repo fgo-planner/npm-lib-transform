@@ -2,8 +2,8 @@
 
 import { ReadonlyRecord } from '@fgo-planner/common-core';
 import { ImmutableMasterAccount, ImmutableMasterServant, InstantiatedServantBondLevel } from '@fgo-planner/data-core';
-import { MasterAccountExportData } from './master-account-export-data.type';
-import { MasterServantExportData } from './master-servant-export-data.type';
+import { MasterAccountExportData } from './MasterAccountExportData.type';
+import { MasterServantExportData } from './MasterServantExportData.type';
 
 export function transformMasterAccount<ID = string>(masterAccount: ImmutableMasterAccount<ID>): MasterAccountExportData {
 

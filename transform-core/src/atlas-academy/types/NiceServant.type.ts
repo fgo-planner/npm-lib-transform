@@ -1,9 +1,9 @@
-import { Attribute } from './attribute.type';
-import { BasicServant } from './basic-servant.type';
-import { NiceGender } from './nice-gender.type';
-import { NiceLvlUpMaterial } from './nice-lvl-up-material.type';
-import { NiceServantProfile } from './nice-servant-profile.type';
-import { NiceTd } from './nice-td.type';
+import { Attribute } from './Attribute.type';
+import { BasicServant } from './BasicServant.type';
+import { NiceGender } from './NiceGender.type';
+import { NiceLvlUpMaterial } from './NiceLvlUpMaterial.type';
+import { NiceServantProfile } from './NiceServantProfile.type';
+import { NiceTd } from './NiceTd.type';
 
 type AscensionMaterialKey = 0 | 1 | 2 | 3;
 

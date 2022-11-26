@@ -1,5 +1,5 @@
-import { LoggerMessageLevel } from './logger-message-level.enum';
-import { LoggerMessage } from './logger-message.type';
+import { LoggerMessageLevel } from './LoggerMessageLevel.enum';
+import { LoggerMessage } from './LoggerMessage.type';
 
 export class TransformLogger<ID extends string | number | symbol = number> {
 

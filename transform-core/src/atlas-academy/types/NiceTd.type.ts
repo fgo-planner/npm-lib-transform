@@ -1,5 +1,5 @@
-import { NiceCardType } from './nice-card-type.type';
-import { NiceFunction } from './nice-function.type';
+import { NiceCardType } from './NiceCardType.type';
+import { NiceFunction } from './NiceFunction.type';
 
 /**
  * Partial type definition for Atlas Academy's `NiceTd` data schema.

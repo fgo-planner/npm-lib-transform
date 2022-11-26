@@ -1,6 +1,6 @@
-import { NiceItemBGType } from './nice-item-bg-type.type';
-import { NiceItemType } from './nice-item-type.type';
-import { NiceItemUse } from './nice-item-use.type';
+import { NiceItemBGType } from './NiceItemBgType.type';
+import { NiceItemType } from './NiceItemType.type';
+import { NiceItemUse } from './NiceItemUse.type';
 
 /**
  * Partial type definition for Atlas Academy's `NiceItem` data schema.

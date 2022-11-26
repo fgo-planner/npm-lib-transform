@@ -1,4 +1,4 @@
-import { NiceStatusRank } from './nice-status-rank.type';
+import { NiceStatusRank } from './NiceStatusRank.type';
 
 /**
  * Atlas Academy `NiceLoreStats` enum values used by the `flag` property in the

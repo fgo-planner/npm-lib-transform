@@ -1,4 +1,4 @@
-import { NiceShop } from './nice-shop.type';
+import { NiceShop } from './NiceShop.type';
 
 /**
  * Partial type definition for Atlas Academy's `NiceBgmEntity` data schema.

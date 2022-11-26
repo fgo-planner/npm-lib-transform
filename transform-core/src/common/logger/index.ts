@@ -1,3 +1,3 @@
-export * from './logger-message-level.enum';
-export * from './logger-message.type';
-export * from './transform-logger.class';
+export * from './LoggerMessageLevel.enum';
+export * from './LoggerMessage.type';
+export * from './TransformLogger.class';

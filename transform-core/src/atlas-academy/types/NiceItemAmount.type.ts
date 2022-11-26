@@ -1,4 +1,4 @@
-import { NiceItem } from './nice-item.type';
+import { NiceItem } from './NiceItem.type';
 
 /**
  * Type definition for Atlas Academy's `NiceItemAmount` data schema.

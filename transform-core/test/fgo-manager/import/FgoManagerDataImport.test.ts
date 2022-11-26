@@ -3,7 +3,7 @@ import { InstantiatedServantUpdateIndeterminateValue as IndeterminateValue } fro
 import { GameServant_1100900, GameServant_201300, GameServant_504400 } from '@fgo-planner/data-test-resources';
 import { LoggerMessageLevel } from '../../../src/common/logger';
 import { FgoManagerDataImport } from '../../../src/fgo-manager';
-import { DebugTransformLogger } from '../../resources/debug-transform-logger.class';
+import { DebugTransformLogger } from '../../resources/DebugTransformLogger.class';
 
 describe('parseRosterSheet', () => {
 

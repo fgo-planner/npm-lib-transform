@@ -1,1 +1,1 @@
-export * as FgoManagerDataImport from './import/fgo-manager-data-import';
+export * as FgoManagerDataImport from './import/FgoManagerDataImport';
