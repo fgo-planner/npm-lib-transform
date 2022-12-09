@@ -1,5 +1,5 @@
 import { DateTimeUtils, Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { GameServant, ImportedMasterServantUpdate, InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantConstants, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel, InstantiatedServantUpdateBoolean, InstantiatedServantUpdateIndeterminate as Indeterminate, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue, InstantiatedServantUtils } from '@fgo-planner/data-core';
+import { BatchMasterServantUpdate, GameServant, InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantConstants, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel, InstantiatedServantUpdateBoolean, InstantiatedServantUpdateIndeterminate as Indeterminate, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue, InstantiatedServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../common/logger';
 
@@ -30,8 +30,6 @@ const LevelPrefix = 'Lv. ';
 const NoblePhantasmLevelPrefix = 'NP';
 
 const AcquisitionDateFormat = 'yyyy. MM. dd.';
-
-const MasterServantUpdateType = 'Imported';
 
 //#endregion
 
@@ -103,12 +101,12 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
     /**
      * Uncaught exceptions may be thrown.
      */
-    parse(): Array<ImportedMasterServantUpdate> {
+    parse(): Array<BatchMasterServantUpdate> {
         if (this._data.length <= this._currentRowIndex) {
             this._logger.warn('Data does not contain any servants');
             return [];
         }
-        const result: Array<ImportedMasterServantUpdate> = [];
+        const result: Array<BatchMasterServantUpdate> = [];
         for (; this._currentRowIndex < this._data.length; this._currentRowIndex++) {
             this._currentRowData = this._data[this._currentRowIndex];
             if (!this._currentRowData?.length) {
@@ -126,7 +124,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         return result;
     }
 
-    private _parseCurrentRow(): ImportedMasterServantUpdate {
+    private _parseCurrentRow(): BatchMasterServantUpdate {
 
         const gameServant = this._parseGameServant();
         const gameId = gameServant._id;
@@ -141,7 +139,6 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         const skill3 = this._parseSkill(3, true);
 
         return {
-            type: MasterServantUpdateType,
             gameId,
             summoned: InstantiatedServantUpdateBoolean.True,
             summonDate,

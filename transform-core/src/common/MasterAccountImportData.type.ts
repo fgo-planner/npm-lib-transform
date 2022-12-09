@@ -1,4 +1,4 @@
-import { ImportedMasterServantUpdate } from '@fgo-planner/data-core';
+import { BatchMasterServantUpdate } from '@fgo-planner/data-core';
 import { TransformLogger } from './logger/TransformLogger.class';
 
 export type MasterAccountImportData = {
@@ -25,7 +25,7 @@ export type MasterAccountImportData = {
 
     };
 
-    servants?: Array<ImportedMasterServantUpdate>;
+    servants?: Array<BatchMasterServantUpdate>;
 
     // lastServantInstanceId: number;
 

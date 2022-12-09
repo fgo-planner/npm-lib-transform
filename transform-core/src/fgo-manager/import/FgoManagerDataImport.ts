@@ -1,11 +1,11 @@
 import { Array2D, ImmutableRecord } from '@fgo-planner/common-core';
-import { GameServant, ImportedMasterServantUpdate } from '@fgo-planner/data-core';
+import { BatchMasterServantUpdate, GameServant } from '@fgo-planner/data-core';
 import { MasterAccountImportData, TransformLogger } from '../../common';
 import { RosterSheetToMasterServantUpdatesTransformWorker } from './RosterSheetToMasterServantUpdatesTransformWorker';
 
 /**
  * Transforms the 'Roster' sheet data from FGO Manager (exported as CSV) into an
- * array of `NewMasterServantUpdate` objects that can be used to add new
+ * array of `BatchMasterServantUpdate` objects that can be used to add new
  * servants and/or update existing servants.
  *
  * @param sheetData The CSV data, in the form of a 2D string array.
@@ -17,7 +17,7 @@ import { RosterSheetToMasterServantUpdatesTransformWorker } from './RosterSheetT
  * `TransformLogger`.
  *
  * @return A `MasterAccountImportData` data transfer object containing a
- * `NewMasterServantUpdate` array. 
+ * `BatchMasterServantUpdate` array. 
  */
 export function transformRosterSheetToMasterAccountImportData(
     sheetData: Array2D<string>,
@@ -38,7 +38,7 @@ function _transformRosterSheetToMasterServantUpdates(
     sheetData: Array2D<string>,
     gameServantNameMap: ImmutableRecord<string, GameServant>,
     logger: TransformLogger
-): Array<ImportedMasterServantUpdate> {
+): Array<BatchMasterServantUpdate> {
 
     try {
         const worker = new RosterSheetToMasterServantUpdatesTransformWorker(

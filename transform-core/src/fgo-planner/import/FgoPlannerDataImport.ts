@@ -1,8 +1,6 @@
-import { ImportedMasterServantUpdate, ServantUpdateUtils } from '@fgo-planner/data-core';
+import { BatchMasterServantUpdate, InstantiatedServantUpdateUtils } from '@fgo-planner/data-core';
 import { MasterAccountImportData, MasterServantExportData, TransformLogger } from '../../common';
 import { MasterAccountExportData } from '../../common/MasterAccountExportData.type';
-
-const ImportedMasterServantUpdateType = 'Imported';
 
 export function transformMasterAccountData(
     data: object,
@@ -60,7 +58,7 @@ function _validateData(data: object): MasterAccountExportData {
     return data as MasterAccountExportData;
 }
 
-function _transformMasterServant(masterServant: MasterServantExportData): ImportedMasterServantUpdate {
+function _transformMasterServant(masterServant: MasterServantExportData): BatchMasterServantUpdate {
 
     const {
         instanceId,
@@ -86,10 +84,9 @@ function _transformMasterServant(masterServant: MasterServantExportData): Import
     } = masterServant;
 
     return {
-        type: ImportedMasterServantUpdateType,
         instanceId,
         gameId,
-        summoned: ServantUpdateUtils.fromBoolean(summoned),
+        summoned: InstantiatedServantUpdateUtils.fromBoolean(summoned),
         summonDate: summonDate,
         np,
         level,
