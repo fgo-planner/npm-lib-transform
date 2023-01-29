@@ -1,5 +1,5 @@
-import { ReadonlyRecord } from '@fgo-planner/common-core';
-import { ExternalLink, GameServant, GameServantAttribute, GameServantCardType, GameServantClass, GameServantCostume, GameServantEnhancement, GameServantGender, GameServantGrowthCurve, GameServantNoblePhantasm, GameServantNoblePhantasmTarget, GameServantRarity, GameServantSkillMaterials } from '@fgo-planner/data-core';
+import { ReadonlyRecord, StringUtils } from '@fgo-planner/common-core';
+import { GameServantAttribute, GameServantCardType, GameServantClass, GameServantCostume, GameServantEnhancement, GameServantGender, GameServantGrowthCurveBase, GameServantNoblePhantasm, GameServantNoblePhantasmTarget, GameServantRarity, GameServantSkillMaterials, GameServantWithMetadata, SearchTag } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
 import { AtlasAcademyTransformUtils } from '../AtlasAcademyTransformUtils';
 import * as AtlasAcademy from '../Types';
@@ -50,7 +50,7 @@ const ServantClassMap = {
 const ServantGenderMap = {
     'male': GameServantGender.Male,
     'female': GameServantGender.Female,
-    'unknown': GameServantGender.None
+    'unknown': GameServantGender.Unknown
 } as ReadonlyRecord<AtlasAcademy.NiceGender, GameServantGender>;
 
 /**
@@ -95,8 +95,8 @@ export class NiceServantsToGameServantsTransformWorker {
     /**
      * Uncaught exceptions may be thrown.
      */
-    transform(): Array<GameServant> {
-        const result: Array<GameServant> = [];
+    transform(): Array<GameServantWithMetadata> {
+        const result: Array<GameServantWithMetadata> = [];
         for (const niceServantJp of this._niceServantsJp) {
             const gameServant = this._transformServantData(niceServantJp);
             if (gameServant) {
@@ -106,7 +106,7 @@ export class NiceServantsToGameServantsTransformWorker {
         return result;
     }
 
-    private _transformServantData(niceServant: AtlasAcademy.NiceServant): GameServant | null {
+    private _transformServantData(niceServant: AtlasAcademy.NiceServant): GameServantWithMetadata | null {
 
         /**
          * Currently only normal servants (and Mash) are supported.
@@ -164,9 +164,10 @@ export class NiceServantsToGameServantsTransformWorker {
 
         const np = this._parseNoblePhantasms(niceServant.noblePhantasms);
 
-        const result: GameServant = {
+        const result: GameServantWithMetadata = {
             _id: niceServant.id,
             name: niceServant.name,
+            displayName: niceServant.name,
             collectionNo: niceServant.collectionNo,
             class: ServantClassMap[niceServant.className],
             rarity: niceServant.rarity as GameServantRarity,
@@ -185,12 +186,12 @@ export class NiceServantsToGameServantsTransformWorker {
             costumes,
             np,
             metadata: {
-                displayName: niceServant.name,
-                links: [] as Array<ExternalLink>
+                searchTags: [],
+                links: []
             }
         };
 
-        this._populateServantEnglishStrings(result);
+        this._populateServantEnglishStrings(result, niceServant);
 
         this._logger?.info(niceServant.id, 'Servant processed');
         return result;
@@ -219,20 +220,19 @@ export class NiceServantsToGameServantsTransformWorker {
     }
 
     /**
-     * Converts a servant's in-game growth curve ID to a `GameServantGrowthCurve`
-     * value.
+     * Converts a servant's growth curve ID to a `GameServantGrowthCurveBase` value.
      */
-    private _convertGrowthCurve(growthCurve: number): GameServantGrowthCurve {
+    private _convertGrowthCurve(growthCurve: number): GameServantGrowthCurveBase {
         if (growthCurve <= 5) {
-            return GameServantGrowthCurve.Linear;
+            return GameServantGrowthCurveBase.Linear;
         } else if (growthCurve <= 10) {
-            return GameServantGrowthCurve.ReverseS;
+            return GameServantGrowthCurveBase.ReverseS;
         } else if (growthCurve <= 15) {
-            return GameServantGrowthCurve.S;
+            return GameServantGrowthCurveBase.S;
         } else if (growthCurve <= 25) {
-            return GameServantGrowthCurve.SemiReverseS;
+            return GameServantGrowthCurveBase.SemiReverseS;
         }
-        return GameServantGrowthCurve.SemiS;
+        return GameServantGrowthCurveBase.SemiS;
     }
 
     /**
@@ -308,32 +308,89 @@ export class NiceServantsToGameServantsTransformWorker {
      * Populate the given servant with their English strings using the lookup map.
      * If the name is not present in the map, the Japanese names will be retained.
      */
-    private _populateServantEnglishStrings(gameServant: GameServant): void {
-        const servantEnData = this._niceServantEnMap[gameServant._id];
-        if (!servantEnData) {
-            this._logger?.warn(gameServant._id, 'English strings not available for servant. English string population will be skipped.');
-            return;
-        }
-        /**
-         * Populate English names
-         */
-        gameServant.name = servantEnData.name;
-        gameServant.metadata.displayName = servantEnData.name;
-        /**
-         * Populate English costume names if available.
-         */
-        /** */
-        const costumeEnDataMap = servantEnData.profile?.costume;
-        if (costumeEnDataMap) {
-            const costumeEntries = Object.entries(gameServant.costumes);
-            for (const [id, costume] of costumeEntries) {
-                const costumeEnData = costumeEnDataMap[Number(id)];
-                if (!costumeEnData) {
-                    continue;
+    private _populateServantEnglishStrings(gameServant: GameServantWithMetadata, niceServant: AtlasAcademy.NiceServant): void {
+        const niceServantEn = this._niceServantEnMap[gameServant._id];
+        if (!niceServantEn) {
+            this._logger?.warn(gameServant._id, 'EN data not available for servant.');
+            /**
+             * Populate search tags from JP data.
+             */
+            this._populateSearchTags(gameServant, niceServant);
+        } else {
+            /**
+             * Populate English names.
+             */
+            gameServant.name = niceServantEn.name;
+            gameServant.displayName = niceServantEn.name;
+            /**
+             * Populate search tags.
+             */
+            this._populateSearchTags(gameServant, niceServantEn);
+            /**
+             * Populate English costume names if available.
+             */
+            /** */
+            const costumeEnDataMap = niceServantEn.profile?.costume;
+            if (costumeEnDataMap) {
+                const costumeEntries = Object.entries(gameServant.costumes);
+                for (const [id, costume] of costumeEntries) {
+                    const costumeEnData = costumeEnDataMap[Number(id)];
+                    if (!costumeEnData) {
+                        continue;
+                    }
+                    costume.name = costumeEnData.name;
                 }
-                costume.name = costumeEnData.name;
             }
         }
+    }
+
+    private _populateSearchTags(gameServant: GameServantWithMetadata, niceServant: AtlasAcademy.NiceServant): void {
+
+        const {
+            name,
+            ascensionAdd: {
+                overWriteServantName,
+                overWriteServantBattleName
+            }
+        } = niceServant;
+
+        const searchTags = gameServant.metadata.searchTags;
+
+        this._addSearchTag(StringUtils.normalizeDiacritic(name), searchTags);
+
+        for (let value of Object.values(overWriteServantName.ascension)) {
+            value = StringUtils.normalizeDiacritic(value);
+            if (!this._isInSearchTags(value, searchTags)) {
+                this._addSearchTag(value, searchTags);
+            }
+        }
+
+        for (let value of Object.values(overWriteServantBattleName.ascension)) {
+            value = StringUtils.normalizeDiacritic(value);
+            if (!this._isInSearchTags(value, searchTags)) {
+                this._addSearchTag(value, searchTags);
+            }
+        }
+    }
+
+    private _addSearchTag(value: string, searchTags: Array<SearchTag>): void {
+        searchTags.push({
+            value,
+            enabled: true
+        });
+    }
+
+    /**
+     * Checks whether the value already exists in the search tags.
+     */
+    private _isInSearchTags(value: string, searchTags: Array<SearchTag>): boolean {
+        value = value.toLowerCase();
+        for (const searchTag of searchTags) {
+            if (searchTag.value.toLowerCase().indexOf(value) !== -1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

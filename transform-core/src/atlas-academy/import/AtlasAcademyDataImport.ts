@@ -1,4 +1,4 @@
-import { GameItem, GameServant, GameSoundtrack } from '@fgo-planner/data-core';
+import { GameItem, GameServantWithMetadata, GameSoundtrack } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
 import { NiceBgmEntity } from '../types/NiceBgmEntity.type';
 import { NiceItem } from '../types/NiceItem.type';
@@ -55,7 +55,7 @@ export function transformNiceServantsToGameServants(
     niceServantsJp: ReadonlyArray<NiceServant>,
     niceServantsEn: ReadonlyArray<NiceServant>,
     logger?: TransformLogger
-): Array<GameServant> {
+): Array<GameServantWithMetadata> {
 
     const worker = new NiceServantsToGameServantsTransformWorker(
         niceServantsJp,

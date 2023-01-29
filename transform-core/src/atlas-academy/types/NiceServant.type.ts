@@ -1,3 +1,4 @@
+import { AscensionAdd } from './AscensionAdd.type';
 import { Attribute } from './Attribute.type';
 import { BasicServant } from './BasicServant.type';
 import { NiceGender } from './NiceGender.type';
@@ -22,6 +23,7 @@ export type NiceServant = BasicServant & {
     hpBase: number;
     hpMax: number;
     growthCurve: number;
+    ascensionAdd: AscensionAdd;
     ascensionMaterials: Record<AscensionMaterialKey, NiceLvlUpMaterial>;
     skillMaterials: Record<SkillMaterialKey, NiceLvlUpMaterial>;
     appendSkillMaterials: Record<SkillMaterialKey, NiceLvlUpMaterial>;
