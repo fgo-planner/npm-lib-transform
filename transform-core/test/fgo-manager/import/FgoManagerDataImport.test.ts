@@ -110,7 +110,7 @@ describe('parseRosterSheet', () => {
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const servant1 = result.servants![0];
-        expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
+        expect(servant1.servantId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);
         expect(servant1.fouHp).toStrictEqual(1000);
@@ -147,7 +147,7 @@ describe('parseRosterSheet', () => {
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const servant1 = result.servants![0];
-        expect(servant1.gameId).toStrictEqual(GameServant_1100900._id);
+        expect(servant1.servantId).toStrictEqual(GameServant_1100900._id);
         expect(servant1.level).toStrictEqual(90);
         expect(servant1.np).toStrictEqual(5);
         expect(servant1.fouHp).toStrictEqual(1000);

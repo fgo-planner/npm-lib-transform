@@ -62,7 +62,7 @@ function _transformMasterServant(masterServant: MasterServantExportData): BatchM
 
     const {
         instanceId,
-        gameId,
+        servantId,
         summoned,
         summonDate,
         np,
@@ -85,7 +85,7 @@ function _transformMasterServant(masterServant: MasterServantExportData): BatchM
 
     return {
         instanceId,
-        gameId,
+        servantId,
         summoned: InstantiatedServantUpdateUtils.fromBoolean(summoned),
         summonDate: summonDate,
         np,

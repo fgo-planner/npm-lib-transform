@@ -127,7 +127,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
     private _parseCurrentRow(): BatchMasterServantUpdate {
 
         const gameServant = this._parseGameServant();
-        const gameId = gameServant._id;
+        const servantId = gameServant._id;
         const summonDate = this._parseSummonDate();
         const np = this._parseNoblePhantasm();
         const { level, ascension } = this._parseLevelAndAscension(gameServant);
@@ -139,7 +139,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         const skill3 = this._parseSkill(3, true);
 
         return {
-            gameId,
+            servantId,
             summoned: InstantiatedServantUpdateBoolean.True,
             summonDate,
             np,

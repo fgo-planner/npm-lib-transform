@@ -15,9 +15,11 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
             items,
             qp
         },
-        servants,
+        servants: {
+            servants,
+            bondLevels
+        },
         costumes,
-        bondLevels,
         soundtracks
     } = masterAccount;
 
@@ -29,13 +31,20 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
             name,
             friendId
         },
-        servants: exportedServants,
+        servants: {
+            servants: exportedServants
+        },
         resources: {
             items: { ...items },
             qp
         },
-        costumes: [...costumes],
-        soundtracks: [...soundtracks]
+        costumes: {
+            unlocked: [...costumes.unlocked],
+            noCostUnlock: [...costumes.noCostUnlock]
+        },
+        soundtracks: {
+            unlocked: [...soundtracks.unlocked]
+        }
     };
 
 }
@@ -47,7 +56,7 @@ function _transformMasterServant(
 
     const {
         instanceId,
-        gameId,
+        servantId,
         summoned,
         summonDate,
         np,
@@ -67,11 +76,11 @@ function _transformMasterServant(
         }
     } = masterServant;
 
-    const bondLevel = bondLevels[gameId];
+    const bondLevel = bondLevels[servantId];
 
     return {
         instanceId,
-        gameId,
+        servantId,
         summoned,
         summonDate: summonDate ? summonDate.getTime() : null,
         np,

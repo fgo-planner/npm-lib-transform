@@ -15,14 +15,25 @@ export type SvtClass =
     'alterEgo' |
     'avenger' |
     'demonGodPillar' |
+    'moonCancer' |
+    'foreigner' |
+    'pretender' |
     'grandCaster' |
     'beastII' |
+    'ushiChaosTide' |
     'beastI' |
-    'moonCancer' |
+    'beastILost' |
     'beastIIIR' |
-    'foreigner' |
     'beastIIIL' |
+    'beastIV' |
     'beastUnknown' |
     'unknown' |
-    'pretender' |
+    'agarthaPenth' |
+    'cccFinaleEmiyaAlter' |
+    'salemAbby' |
+    'uOlgaMarie' |
+    'uOlgaMarieAlienGod' |
+    'beast' |
+    'beastVI' |
+    'atlasUnmappedClass' |
     'ALL';

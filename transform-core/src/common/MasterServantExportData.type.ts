@@ -4,7 +4,7 @@ export type MasterServantExportData = {
     
     instanceId: number;
 
-    gameId: number;
+    servantId: number;
 
     summoned: boolean;
 

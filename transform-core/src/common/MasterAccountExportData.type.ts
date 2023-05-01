@@ -1,7 +1,7 @@
 import { MasterServantExportData } from './MasterServantExportData.type';
 
 export type MasterAccountExportData = {
-    
+
     source: {
 
         id: string;
@@ -9,7 +9,7 @@ export type MasterAccountExportData = {
         name?: string;
 
         friendId?: string;
-        
+
     }
 
     resources?: {
@@ -20,12 +20,24 @@ export type MasterAccountExportData = {
 
     };
 
-    servants?: Array<MasterServantExportData>;
+    servants?: {
 
-    // lastServantInstanceId: number;
+        servants: Array<MasterServantExportData>;
 
-    costumes?: Array<number>;
+    };
 
-    soundtracks?: Array<number>;
+    costumes?: {
+
+        unlocked: Array<number>;
+
+        noCostUnlock: Array<number>;
+
+    };
+
+    soundtracks?: {
+
+        unlocked: Array<number>;
+
+    };
 
 };
