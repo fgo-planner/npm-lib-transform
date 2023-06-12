@@ -37,7 +37,7 @@ export function transformMasterAccountData(
     }
 
     if (servants) {
-        result.servants = servants.map(_transformMasterServant);
+        result.servants = servants.servants.map(_transformMasterServant);
     }
 
     if (costumes) {
@@ -73,12 +73,12 @@ function _transformMasterServant(masterServant: MasterServantExportData): BatchM
         skills: {
             1: skill1,
             2: skill2,
-            3: skill3,
+            3: skill3
         },
         appendSkills: {
             1: appendSkill1,
             2: appendSkill2,
-            3: appendSkill3,
+            3: appendSkill3
         },
         bondLevel
     } = masterServant;

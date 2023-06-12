@@ -1,11 +1,11 @@
 
 
-import { ReadonlyRecord } from '@fgo-planner/common-core';
-import { ImmutableMasterAccount, ImmutableMasterServant, InstantiatedServantBondLevel } from '@fgo-planner/data-core';
+import { Immutable, ReadonlyRecord, DateTimeUtils } from '@fgo-planner/common-core';
+import { MasterAccount, MasterServant, InstantiatedServantBondLevel } from '@fgo-planner/data-core';
 import { MasterAccountExportData } from './MasterAccountExportData.type';
 import { MasterServantExportData } from './MasterServantExportData.type';
 
-export function transformMasterAccount<ID = string>(masterAccount: ImmutableMasterAccount<ID>): MasterAccountExportData {
+export function transformMasterAccount<ID = string>(masterAccount: Immutable<MasterAccount<ID>>): MasterAccountExportData {
 
     const {
         _id,
@@ -50,7 +50,7 @@ export function transformMasterAccount<ID = string>(masterAccount: ImmutableMast
 }
 
 function _transformMasterServant(
-    masterServant: ImmutableMasterServant,
+    masterServant: Immutable<MasterServant>,
     bondLevels: ReadonlyRecord<number, InstantiatedServantBondLevel>
 ): MasterServantExportData {
 
@@ -67,12 +67,12 @@ function _transformMasterServant(
         skills: {
             1: skill1,
             2: skill2,
-            3: skill3,
+            3: skill3
         },
         appendSkills: {
             1: appendSkill1,
             2: appendSkill2,
-            3: appendSkill3,
+            3: appendSkill3
         }
     } = masterServant;
 
@@ -82,7 +82,7 @@ function _transformMasterServant(
         instanceId,
         servantId,
         summoned,
-        summonDate: summonDate ? summonDate.getTime() : null,
+        summonDate: DateTimeUtils.getTime(summonDate) || null,
         np,
         level,
         ascension,

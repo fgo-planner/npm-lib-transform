@@ -8,13 +8,13 @@ export type MasterAccountImportData = {
         fgoPlannerSourceAccount?: {
 
             id: string;
-    
+
             name?: string;
-    
+
             friendId?: string;
 
         }
-        
+
     }
 
     resources?: {
@@ -29,10 +29,19 @@ export type MasterAccountImportData = {
 
     // lastServantInstanceId: number;
 
-    costumes?: Array<number>;
+    costumes?: {
 
-    soundtracks?: Array<number>;
+        unlocked: Array<number>;
 
+        noCostUnlock: Array<number>;
+
+    };
+
+    soundtracks?: {
+
+        unlocked: Array<number>;
+
+    };
     logger: TransformLogger;
 
 };
