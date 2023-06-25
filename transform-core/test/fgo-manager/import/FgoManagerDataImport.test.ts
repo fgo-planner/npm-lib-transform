@@ -1,5 +1,5 @@
-import { Array2D } from '@fgo-planner/common-core';
-import { InstantiatedServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
+import { Array2D, Immutable } from '@fgo-planner/common-core';
+import { GameServant, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue } from '@fgo-planner/data-core';
 import { GameServant_1100900, GameServant_201300, GameServant_504400 } from '@fgo-planner/data-test-resources';
 import { LoggerMessageLevel } from '../../../src/common/logger';
 import { FgoManagerDataImport } from '../../../src/fgo-manager';
@@ -7,11 +7,11 @@ import { DebugTransformLogger } from '../../resources/DebugTransformLogger.class
 
 describe('parseRosterSheet', () => {
 
-    const gameServantNameMap = {
-        'Arash': GameServant_201300,
-        'Chen Gong': GameServant_504400,
-        'Space Ishtar': GameServant_1100900
-    };
+    const gameServantNameMap = new Map<string, Immutable<GameServant>>([
+        ['Arash', GameServant_201300],
+        ['Chen Gong', GameServant_504400],
+        ['Space Ishtar', GameServant_1100900]
+    ]);
 
     /* eslint-disable max-len */
     const topRow = ['General Information', '', '', '', '', 'Deck', '', '', '', '', '', 'NP', '', '', 'Levels', '', 'Skills', '', '', 'Fou', '', 'Bond', '', 'Extra'];

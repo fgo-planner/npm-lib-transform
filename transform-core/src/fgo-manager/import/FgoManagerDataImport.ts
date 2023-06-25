@@ -1,4 +1,4 @@
-import { Array2D, ImmutableRecord } from '@fgo-planner/common-core';
+import { Array2D, Immutable } from '@fgo-planner/common-core';
 import { BatchMasterServantUpdate, GameServant } from '@fgo-planner/data-core';
 import { MasterAccountImportData, TransformLogger } from '../../common';
 import { RosterSheetToMasterServantUpdatesTransformWorker } from './RosterSheetToMasterServantUpdatesTransformWorker';
@@ -21,7 +21,7 @@ import { RosterSheetToMasterServantUpdatesTransformWorker } from './RosterSheetT
  */
 export function transformRosterSheetToMasterAccountImportData(
     sheetData: Array2D<string>,
-    gameServantNameMap: ImmutableRecord<string, GameServant>,
+    gameServantNameMap: ReadonlyMap<string, Immutable<GameServant>>,
     logger = new TransformLogger()
 ): MasterAccountImportData {
 
@@ -36,7 +36,7 @@ export function transformRosterSheetToMasterAccountImportData(
 
 function _transformRosterSheetToMasterServantUpdates(
     sheetData: Array2D<string>,
-    gameServantNameMap: ImmutableRecord<string, GameServant>,
+    gameServantNameMap: ReadonlyMap<string, Immutable<GameServant>>,
     logger: TransformLogger
 ): Array<BatchMasterServantUpdate> {
 
@@ -47,11 +47,11 @@ function _transformRosterSheetToMasterServantUpdates(
             logger
         );
         return worker.parse();
-        
+
     } catch (e: any) {
         const message: string = typeof e === 'string' ? e : e.message;
         logger.error(message);
     }
-    
+
     return [];
 }

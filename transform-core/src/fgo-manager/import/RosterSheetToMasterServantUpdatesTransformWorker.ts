@@ -1,5 +1,5 @@
-import { DateTimeUtils, Immutable, ImmutableRecord, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
-import { BatchMasterServantUpdate, GameServant, InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantConstants, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel, InstantiatedServantUpdateBoolean, InstantiatedServantUpdateIndeterminate as Indeterminate, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue, InstantiatedServantUtils } from '@fgo-planner/data-core';
+import { DateTimeUtils, Immutable, MathUtils, ReadonlyRecord } from '@fgo-planner/common-core';
+import { BatchMasterServantUpdate, GameServant, InstantiatedServantUpdateIndeterminate as Indeterminate, InstantiatedServantUpdateIndeterminateValue as IndeterminateValue, InstantiatedServantAscensionLevel, InstantiatedServantBondLevel, InstantiatedServantConstants, InstantiatedServantNoblePhantasmLevel, InstantiatedServantSkillLevel, InstantiatedServantUpdateBoolean, InstantiatedServantUtils } from '@fgo-planner/data-core';
 import { parse as parseDate } from 'date-fns';
 import { TransformLogger } from '../../common/logger';
 
@@ -65,7 +65,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
 
     constructor(
         private _data: Array<Array<string>>,
-        private _gameServantNameMap: ImmutableRecord<string, GameServant>,
+        private _gameServantNameMap: ReadonlyMap<string, Immutable<GameServant>>,
         private _logger: TransformLogger<number>
     ) {
         this._headerMap = this._parseHeader(_data);
@@ -167,7 +167,7 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
         if (!value) {
             throw Error('Servant name is missing, row will be skipped.');
         }
-        const result = this._gameServantNameMap[value];
+        const result = this._gameServantNameMap.get(value);
         if (result === undefined) {
             throw Error(`Data for servant name '${value}' could not be found, row will be skipped.`);
         }
@@ -186,8 +186,8 @@ export class RosterSheetToMasterServantUpdatesTransformWorker {
             return IndeterminateValue;
         }
         return ~~MathUtils.clamp(
-            result, 
-            InstantiatedServantConstants.MinNoblePhantasmLevel, 
+            result,
+            InstantiatedServantConstants.MinNoblePhantasmLevel,
             InstantiatedServantConstants.MaxNoblePhantasmLevel
         ) as InstantiatedServantNoblePhantasmLevel;
     }
