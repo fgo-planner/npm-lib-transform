@@ -1,7 +1,7 @@
 {
     "name": "@fgo-planner/transform-core",
     "description": "Provides utilities (transformers, parsers, etc.) for importing and exporting data.",
-    "version": "0.8.1",
+    "version": "0.9.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/fgo-planner/npm-lib-transform.git"
@@ -51,7 +51,7 @@
     },
     "peerDependencies": {
         "@fgo-planner/common-core": "^0.1.4",
-        "@fgo-planner/data-core": ">= 0.8.1 < 0.9.0 || ^0.8.2-rc || ^0.8.3-rc",
+        "@fgo-planner/data-core": ">= 0.9.0 < 0.11.0 || ^0.9.0-rc || ^0.11.0-rc",
         "date-fns": "^2.29.2"
     },
     "devDependencies": {
@@ -59,7 +59,7 @@
         "@babel/core": "^7.18.13",
         "@babel/preset-env": "^7.18.10",
         "@babel/preset-typescript": "^7.18.6",
-        "@fgo-planner/data-test-resources": "^0.8.1",
+        "@fgo-planner/data-test-resources": "^0.9.0",
         "@types/jest": "^29.0.0",
         "@types/node": "^18.7.15",
         "@typescript-eslint/eslint-plugin": "^5.32.0",
