@@ -2,13 +2,16 @@ import { ReadonlyRecord, StringUtils } from '@fgo-planner/common-core';
 import { GameServantAttribute, GameServantCardType, GameServantClass, GameServantCostume, GameServantEnhancement, GameServantGender, GameServantGrowthCurveBase, GameServantNoblePhantasm, GameServantNoblePhantasmTarget, GameServantRarity, GameServantSkillMaterials, GameServantWithMetadata, SearchTag } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
 import { AtlasAcademyTransformUtils } from '../AtlasAcademyTransformUtils';
-import * as AtlasAcademy from '../Types';
+import * as AtlasAcademy from '../types/atlas-academy';
+import { AtlasAcademyServantTransformOptions } from '../types/AtlasAcademyServantTransformOptions.type';
 
 //#region Constants
 
 const AscensionLevelCount = 4;
 
 const SkillLevelCount = 9;
+
+const UnknownErrorMessage = 'Unknown error';
 
 //#endregion
 
@@ -98,6 +101,7 @@ export class NiceServantsToGameServantsTransformWorker {
     constructor(
         private readonly _niceServantsJp: ReadonlyArray<AtlasAcademy.NiceServant>,
         niceServantsEn: ReadonlyArray<AtlasAcademy.NiceServant>,
+        private readonly _options: AtlasAcademyServantTransformOptions,
         private readonly _logger?: TransformLogger
     ) {
         this._niceServantEnMap = AtlasAcademyTransformUtils.toMap(niceServantsEn);
@@ -107,11 +111,33 @@ export class NiceServantsToGameServantsTransformWorker {
      * Uncaught exceptions may be thrown.
      */
     transform(): Array<GameServantWithMetadata> {
+        const {
+            minCollectionNo = 0,
+            maxCollectionNo = Number.MAX_SAFE_INTEGER
+        } = this._options;
+
+        this._logger?.info(`Only servants collectionNo between ${minCollectionNo} and ${maxCollectionNo} will be processed.`);
+
         const result: Array<GameServantWithMetadata> = [];
         for (const niceServantJp of this._niceServantsJp) {
-            const gameServant = this._transformServantData(niceServantJp);
-            if (gameServant) {
-                result.push(gameServant);
+            if (niceServantJp.collectionNo < minCollectionNo || niceServantJp.collectionNo > maxCollectionNo) {
+                continue;
+            }
+            try {
+                const gameServant = this._transformServantData(niceServantJp);
+                if (gameServant) {
+                    result.push(gameServant);
+                }
+            } catch (error: unknown) {
+                let errorMessage: string;
+                if (error instanceof Error) {
+                    errorMessage = error.message;
+                } else if (typeof error === 'string') {
+                    errorMessage = error;
+                } else {
+                    errorMessage = UnknownErrorMessage;
+                }
+                this._logger?.error(niceServantJp.id, `Error occurred while processing servant: ${errorMessage}`);
             }
         }
         return result;

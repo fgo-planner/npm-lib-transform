@@ -1,7 +1,7 @@
-import { ItemQuantities, GameSoundtrack } from '@fgo-planner/data-core';
+import { GameSoundtrack, ItemQuantities } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
 import { AtlasAcademyTransformUtils } from '../AtlasAcademyTransformUtils';
-import * as AtlasAcademy from '../Types';
+import * as AtlasAcademy from '../types/atlas-academy';
 
 /**
  * Helper class for internal use only, do not add to module exports.
@@ -11,7 +11,7 @@ export class NiceBgmEntitiesToGameSoundtrackTransformWorker {
     constructor(
         private readonly _niceBgmEntitiesJp: ReadonlyArray<AtlasAcademy.NiceBgmEntity>,
         private readonly _logger?: TransformLogger
-    ) {}
+    ) { }
 
     /**
      * Uncaught exceptions may be thrown.

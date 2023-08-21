@@ -1,5 +1,5 @@
 export * as AtlasAcademyDataImport from './import/AtlasAcademyDataImport';
-export * from './types/NiceBgmEntity.type';
-export * from './types/NiceItem.type';
-export * from './types/NiceServant.type';
-
+export * from './types/AtlasAcademyServantTransformOptions.type';
+export * from './types/atlas-academy/NiceBgmEntity.type';
+export * from './types/atlas-academy/NiceItem.type';
+export * from './types/atlas-academy/NiceServant.type';

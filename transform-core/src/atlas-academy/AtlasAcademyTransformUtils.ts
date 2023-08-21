@@ -1,6 +1,6 @@
 import { CollectionUtils } from '@fgo-planner/common-core';
 import { ItemQuantities } from '@fgo-planner/data-core';
-import { NiceItemAmount } from './types/NiceItemAmount.type';
+import { NiceItemAmount } from './types/atlas-academy/NiceItemAmount.type';
 
 function transformItemAmountData(value: NiceItemAmount | Array<NiceItemAmount>): ItemQuantities {
     if (Array.isArray(value)) {

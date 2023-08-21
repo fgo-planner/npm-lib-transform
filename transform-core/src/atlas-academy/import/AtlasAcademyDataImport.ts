@@ -1,8 +1,9 @@
 import { GameItem, GameServantWithMetadata, GameSoundtrack } from '@fgo-planner/data-core';
 import { TransformLogger } from '../../common/logger';
-import { NiceBgmEntity } from '../types/NiceBgmEntity.type';
-import { NiceItem } from '../types/NiceItem.type';
-import { NiceServant } from '../types/NiceServant.type';
+import { AtlasAcademyServantTransformOptions } from '../types/AtlasAcademyServantTransformOptions.type';
+import { NiceBgmEntity } from '../types/atlas-academy/NiceBgmEntity.type';
+import { NiceItem } from '../types/atlas-academy/NiceItem.type';
+import { NiceServant } from '../types/atlas-academy/NiceServant.type';
 import { NiceBgmEntitiesToGameSoundtrackTransformWorker } from './NiceBgmEntitiesToGameSoundtracksTransformWorker';
 import { NiceItemsToGameItemsTransformWorker } from './NiceItemsToGameItemsTransformWorker';
 import { NiceServantsToGameServantsTransformWorker } from './NiceServantsToGameServantsTransformWorker';
@@ -54,12 +55,14 @@ export function transformNiceItemsToGameItems(
 export function transformNiceServantsToGameServants(
     niceServantsJp: ReadonlyArray<NiceServant>,
     niceServantsEn: ReadonlyArray<NiceServant>,
+    options: AtlasAcademyServantTransformOptions = {},
     logger?: TransformLogger
 ): Array<GameServantWithMetadata> {
 
     const worker = new NiceServantsToGameServantsTransformWorker(
         niceServantsJp,
         niceServantsEn,
+        options,
         logger
     );
 
